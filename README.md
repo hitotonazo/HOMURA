@@ -8,7 +8,9 @@
 - `style.css`: 通常テーマ、真相テーマ、ノイズ演出
 - `script.js`: フェーズ管理、ギミック制御、X共有処理
 - `data/config.js`: X共有用URLと投稿文
-- `images/`: サイト内画像
+- `images/`: ローカル確認用画像
+
+サイト内の画像参照は、Cloudflare R2の公開開発URL `https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/` を使用しています。
 
 ## デプロイ方法
 

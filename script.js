@@ -1,8 +1,9 @@
 let phase = 0;
 
+const ASSET_BASE_URL = "https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images";
+
 const body = document.body;
-const overlay = document.getElementById("glitchOverlay");
-const glitchReturn = document.getElementById("glitchReturn");
+const noiseOverlay = document.getElementById("noise-overlay");
 const speakerToggle = document.getElementById("speakerToggle");
 const speakerIcon = document.getElementById("speakerIcon");
 const speakerStatus = document.getElementById("speakerStatus");
@@ -24,24 +25,45 @@ const shareButton = document.getElementById("shareButton");
 
 let speakerPlaying = false;
 let speakerStopCount = 0;
-let pendingPhase = null;
+let noiseNextAction = null;
 
-function showGlitch(nextPhase) {
-  pendingPhase = nextPhase;
-  overlay.classList.add("is-active");
-  overlay.setAttribute("aria-hidden", "false");
-
-  window.setTimeout(() => {
-    phase = nextPhase;
-    applyPhase();
-    glitchReturn.focus();
-  }, 1000);
+function assetUrl(fileName) {
+  return `${ASSET_BASE_URL}/${fileName}`;
 }
 
-function hideGlitch() {
-  overlay.classList.remove("is-active");
-  overlay.setAttribute("aria-hidden", "true");
-  pendingPhase = null;
+function showGlitch(nextPhase) {
+  runSiteAlteredOverlay(() => {
+    phase = nextPhase;
+    applyPhase();
+  });
+}
+
+function runSiteAlteredOverlay(nextAction = null) {
+  if (!noiseOverlay) return;
+
+  noiseNextAction = nextAction;
+  noiseOverlay.classList.add("is-active");
+  noiseOverlay.setAttribute("aria-hidden", "false");
+}
+
+function closeSiteAlteredOverlay() {
+  if (!noiseOverlay) return;
+
+  noiseOverlay.classList.remove("is-active");
+  noiseOverlay.setAttribute("aria-hidden", "true");
+}
+
+function handleNoiseOverlayClick() {
+  closeSiteAlteredOverlay();
+
+  if (typeof noiseNextAction === "function") {
+    const action = noiseNextAction;
+    noiseNextAction = null;
+    action();
+    return;
+  }
+
+  noiseNextAction = null;
 }
 
 function applyPhase() {
@@ -49,21 +71,21 @@ function applyPhase() {
   body.classList.toggle("truth-mode", phase === 4);
 
   if (phase >= 1) {
-    speakerImage.src = "./images/img_speaker_alt_800x600.png";
+    speakerImage.src = assetUrl("img_speaker_alt_800x600.png");
     speakerText.textContent = "停止後も、短い通知音が残ることがあります。HOMURAは環境音の乱れを補正しています。";
     tvTrigger.disabled = false;
     tvTrigger.textContent = "映像プレビューを開く";
   }
 
   if (phase >= 2) {
-    tvImage.src = "./images/img_tv_frame_glitch_800x600.png";
+    tvImage.src = assetUrl("img_tv_frame_glitch_800x600.png");
     tvText.textContent = "プレビューの一部に未処理フレームが含まれています。視聴ログとの差分を再同期してください。";
     hiddenAiButton.disabled = false;
     hiddenAiButton.textContent = "非表示ログを確認";
   }
 
   if (phase >= 3) {
-    aiImage.src = "./images/img_ai_hidden_800x600.png";
+    aiImage.src = assetUrl("img_ai_hidden_800x600.png");
     assistantText.textContent = "HOMURA AIは、快適さのために行動予測を利用します。予測は提案として表示されます。";
     hiddenLog.classList.add("is-visible");
     searchInput.placeholder = "誘導 設定 解除";
@@ -72,14 +94,14 @@ function applyPhase() {
   }
 
   if (phase === 4) {
-    devicesImage.src = "./images/img_devices_truth_1200x800.png";
-    document.querySelector(".hero-media").style.backgroundImage = "url('./images/img_hero_truth_1200x500.png')";
+    devicesImage.src = assetUrl("img_devices_truth_1200x800.png");
+    document.querySelector(".hero-media").style.backgroundImage = `url('${assetUrl("img_hero_truth_1200x500.png")}')`;
     document.getElementById("truthSection").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }
 
 function toggleSpeaker() {
-  if (pendingPhase !== null) return;
+  if (noiseNextAction !== null) return;
 
   speakerPlaying = !speakerPlaying;
   speakerIcon.textContent = speakerPlaying ? "■" : "▶";
@@ -123,6 +145,6 @@ tvTrigger.addEventListener("click", triggerTvPhase);
 hiddenAiButton.addEventListener("click", triggerAiPhase);
 searchForm.addEventListener("submit", triggerTruth);
 shareButton.addEventListener("click", shareToX);
-glitchReturn.addEventListener("click", hideGlitch);
+noiseOverlay.addEventListener("click", handleNoiseOverlayClick);
 
 applyPhase();

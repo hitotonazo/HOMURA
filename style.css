@@ -98,7 +98,7 @@ a {
   border-radius: 0 0 8px 8px;
   background:
     linear-gradient(90deg, rgba(246, 248, 243, 0.96), rgba(246, 248, 243, 0.7) 45%, rgba(246, 248, 243, 0.18)),
-    url("./images/img_hero_home_1200x500.png") center / cover;
+    url("https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_hero_home_1200x500.png") center / cover;
   box-shadow: var(--shadow);
 }
 
@@ -440,60 +440,232 @@ h3 {
   margin: 0;
 }
 
-.glitch-overlay {
+.noise-overlay {
   position: fixed;
   inset: 0;
-  z-index: 100;
-  display: grid;
-  place-items: center;
-  background: rgba(0, 0, 0, 0.92);
+  z-index: 9999;
+  overflow: hidden;
+  isolation: isolate;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(210, 210, 210, 0.16) 0px,
+      rgba(110, 110, 110, 0.22) 1px,
+      rgba(185, 185, 185, 0.16) 2px,
+      rgba(90, 90, 90, 0.18) 3px
+    ),
+    linear-gradient(180deg, rgba(120,120,120,0.18), rgba(165,165,165,0.18));
 }
 
-.glitch-overlay.is-active {
+.noise-overlay.is-active {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 
-.glitch-noise,
-.noise-layer {
+.noise-layer,
+.noise-flash,
+.noise-message {
   position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    url("./images/img_noise_overlay_1200x800.png");
-  background-size: 8px 8px, 11px 11px, cover;
-  mix-blend-mode: screen;
-  opacity: 0.55;
-  animation: jitter 0.18s steps(2) infinite;
 }
 
 .noise-layer {
+  inset: -8%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.noise-layer-1 {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(240,240,240,0.18) 0px,
+      rgba(70,70,70,0.24) 1px,
+      rgba(200,200,200,0.18) 2px,
+      rgba(90,90,90,0.22) 3px,
+      rgba(170,170,170,0.14) 4px
+    );
+  mix-blend-mode: screen;
+}
+
+.noise-layer-2 {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(255,255,255,0.03) 4px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.08) 0px,
+      rgba(0,0,0,0.12) 2px,
+      rgba(255,255,255,0.06) 4px,
+      rgba(0,0,0,0.08) 6px
+    );
+  mix-blend-mode: overlay;
+}
+
+.noise-layer-3 {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.00) 0%,
+      rgba(255,255,255,0.16) 14%,
+      rgba(0,0,0,0.12) 28%,
+      rgba(255,255,255,0.10) 44%,
+      rgba(0,0,0,0.10) 62%,
+      rgba(255,255,255,0.12) 78%,
+      rgba(255,255,255,0.00) 100%
+    );
+  opacity: 0.55;
+  filter: blur(0.4px);
+}
+
+.noise-flash {
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.16) 25%,
+      rgba(255,255,255,0) 52%,
+      rgba(255,255,255,0.12) 76%,
+      rgba(255,255,255,0) 100%
+    );
+  opacity: 0;
+}
+
+.noise-message {
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(88vw, 760px);
+  padding: 0 16px;
+  text-align: center;
+  white-space: nowrap;
+  color: #7c0606;
+  font-size: clamp(1.8rem, 3.2vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  line-height: 1.65;
+  opacity: 1;
+  pointer-events: none;
+  text-shadow:
+    0 0 1px rgba(255,255,255,0.45),
+    0 0 3px rgba(255,255,255,0.25),
+    0 0 4px rgba(0,0,0,1),
+    0 0 10px rgba(0,0,0,0.98),
+    0 0 18px rgba(0,0,0,0.95),
+    0 3px 6px rgba(60,0,0,0.95),
+    0 0 16px rgba(120,0,0,0.7);
+}
+
+.noise-message::before,
+.noise-message::after {
+  content: "????????????";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.noise-message::before {
+  color: rgba(255, 220, 220, 0.22);
+  transform: translate(2px, 0);
+  mix-blend-mode: screen;
+}
+
+.noise-message::after {
+  color: rgba(50, 0, 0, 0.42);
+  transform: translate(-2px, 1px);
+}
+
+.noise-overlay.is-active .noise-layer-1 {
+  animation: staticBandA 0.08s steps(2, end) infinite;
+}
+
+.noise-overlay.is-active .noise-layer-2 {
+  animation: staticBandB 0.11s steps(3, end) infinite;
+}
+
+.noise-overlay.is-active .noise-layer-3 {
+  animation: rollingBand 0.28s linear infinite;
+}
+
+.noise-overlay.is-active .noise-flash {
+  animation: flashSweep 0.32s linear infinite;
+}
+
+.body-noise-layer {
   position: fixed;
+  inset: 0;
   z-index: 5;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    url("https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_noise_overlay_1200x800.png");
+  background-size: 8px 8px, 11px 11px, cover;
+  mix-blend-mode: screen;
   opacity: 0;
   pointer-events: none;
 }
 
-.glitch-message {
-  position: relative;
-  z-index: 1;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 6px;
-  padding: 18px 22px;
-  background: rgba(12, 13, 13, 0.82);
-  color: #f3f3f3;
-  font-weight: 700;
-  cursor: pointer;
+@keyframes staticBandA {
+  0% {
+    opacity: 0.95;
+    transform: translateY(-8px) scaleY(1.04);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(5px) scaleY(1.01);
+  }
+  100% {
+    opacity: 0.92;
+    transform: translateY(-3px) scaleY(1.05);
+  }
 }
 
-@keyframes jitter {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(2px, -1px); }
-  100% { transform: translate(-1px, 1px); }
+@keyframes staticBandB {
+  0% {
+    opacity: 0.65;
+    transform: translateX(-10px);
+  }
+  50% {
+    opacity: 0.45;
+    transform: translateX(12px);
+  }
+  100% {
+    opacity: 0.7;
+    transform: translateX(-6px);
+  }
+}
+
+@keyframes rollingBand {
+  0% {
+    transform: translateY(-24%);
+  }
+  100% {
+    transform: translateY(24%);
+  }
+}
+
+@keyframes flashSweep {
+  0% {
+    opacity: 0;
+    transform: translateY(-18%);
+  }
+  35% {
+    opacity: 0.42;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(18%);
+  }
 }
 
 .truth-mode {
@@ -515,7 +687,7 @@ h3 {
 .truth-mode .hero-media {
   background:
     linear-gradient(90deg, rgba(17, 17, 17, 0.96), rgba(17, 17, 17, 0.72) 45%, rgba(17, 17, 17, 0.16)),
-    url("./images/img_hero_truth_1200x500.png") center / cover;
+    url("https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_hero_truth_1200x500.png") center / cover;
 }
 
 .truth-mode .trust-strip div,
@@ -525,7 +697,7 @@ h3 {
   background: rgba(24, 24, 24, 0.82);
 }
 
-.truth-mode .noise-layer {
+.truth-mode .body-noise-layer {
   opacity: 0.16;
 }
 
@@ -587,5 +759,11 @@ h3 {
   .share-button {
     width: 100%;
     text-align: center;
+  }
+
+  .noise-message {
+    white-space: normal;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
   }
 }

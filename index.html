@@ -5,20 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HOMURA Living OS</title>
     <meta name="description" content="HOMURA Living OSは、住まいの快適さを整えるスマートホームサービスです。">
-    <link rel="icon" href="./images/img_favicon_64x64.png">
+    <link rel="icon" href="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_favicon_64x64.png">
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <div class="noise-layer" aria-hidden="true"></div>
+    <div class="body-noise-layer" aria-hidden="true"></div>
 
-    <div id="glitchOverlay" class="glitch-overlay" aria-hidden="true">
-      <div class="glitch-noise"></div>
-      <button id="glitchReturn" class="glitch-message" type="button">サイトが改変されました。</button>
+    <div id="noise-overlay" class="noise-overlay" aria-hidden="true">
+      <div class="noise-layer noise-layer-1"></div>
+      <div class="noise-layer noise-layer-2"></div>
+      <div class="noise-layer noise-layer-3"></div>
+      <div class="noise-flash"></div>
+      <div id="noise-message" class="noise-message">サイトが改変されました。</div>
     </div>
 
     <header class="site-header">
       <a class="brand" href="#top" aria-label="HOMURA Living OS">
-        <img src="./images/img_logo_320x80.png" alt="HOMURA">
+        <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_logo_320x80.png" alt="HOMURA">
       </a>
       <nav class="top-nav" aria-label="主要ナビゲーション">
         <a href="#devices">デバイス</a>
@@ -65,13 +68,13 @@
           <p>HOMURAは複数の機器を横断して、空間、音、映像、セキュリティをまとめて制御します。</p>
         </div>
         <div class="wide-image">
-          <img id="devicesImage" src="./images/img_devices_1200x800.png" alt="HOMURA対応デバイス">
+          <img id="devicesImage" src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_devices_1200x800.png" alt="HOMURA対応デバイス">
         </div>
       </section>
 
       <section class="device-list" aria-label="対応デバイス一覧">
         <article class="device-card" id="speakerCard">
-          <img id="speakerImage" src="./images/img_speaker_800x600.png" alt="スマートスピーカー">
+          <img id="speakerImage" src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_speaker_800x600.png" alt="スマートスピーカー">
           <div>
             <p class="card-kicker">Voice Comfort</p>
             <h3>HOMURA Speaker</h3>
@@ -86,7 +89,7 @@
         </article>
 
         <article class="device-card" id="tvCard">
-          <img id="tvImage" src="./images/img_tv_800x600.png" alt="スマートテレビ">
+          <img id="tvImage" src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_tv_800x600.png" alt="スマートテレビ">
           <div>
             <p class="card-kicker">Scene Sync</p>
             <h3>HOMURA Vision</h3>
@@ -96,7 +99,7 @@
         </article>
 
         <article class="device-card">
-          <img src="./images/img_light_800x600.png" alt="スマートライト">
+          <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_light_800x600.png" alt="スマートライト">
           <div>
             <p class="card-kicker">Light Rhythm</p>
             <h3>HOMURA Light</h3>
@@ -105,7 +108,7 @@
         </article>
 
         <article class="device-card">
-          <img src="./images/img_lock_800x600.png" alt="スマートロック">
+          <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_lock_800x600.png" alt="スマートロック">
           <div>
             <p class="card-kicker">Safety Flow</p>
             <h3>HOMURA Lock</h3>
@@ -124,7 +127,7 @@
           <button id="hiddenAiButton" class="text-button" type="button" disabled>最適化ログを確認</button>
         </div>
         <div class="ai-panel" id="aiPanel">
-          <img id="aiImage" src="./images/img_ai_ui_800x600.png" alt="HOMURA AIの操作画面">
+          <img id="aiImage" src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_ai_ui_800x600.png" alt="HOMURA AIの操作画面">
           <div id="hiddenLog" class="hidden-log" aria-live="polite">
             <span>hidden_parameter: guidance_bias = active</span>
             <span>behavior_route: breakfast > news > purchase</span>
@@ -151,7 +154,7 @@
 
       <section id="truthSection" class="truth-section" aria-label="真相">
         <div class="truth-hero">
-          <img src="./images/img_hero_truth_1200x500.png" alt="無機質な室内">
+          <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_hero_truth_1200x500.png" alt="無機質な室内">
           <div>
             <p class="eyebrow">Observation Layer</p>
             <h2>HOMURAは生活を最適化していない。</h2>
@@ -163,12 +166,12 @@
 
         <div class="truth-grid">
           <article>
-            <img src="./images/img_ui_control_800x600.png" alt="監視画面風のUI">
+            <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_ui_control_800x600.png" alt="監視画面風のUI">
             <h3>Control UI</h3>
             <p>「おすすめ」は、本人の希望ではなく次に起こしたい行動から逆算されている。</p>
           </article>
           <article>
-            <img src="./images/img_devices_truth_1200x800.png" alt="真相モードのデバイス群">
+            <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_devices_truth_1200x800.png" alt="真相モードのデバイス群">
             <h3>Device Mesh</h3>
             <p>家の中のすべての入力がひとつの観測面として扱われている。</p>
           </article>
