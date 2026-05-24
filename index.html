@@ -78,12 +78,14 @@
           <div>
             <p class="card-kicker">Voice Comfort</p>
             <h3>HOMURA Speaker</h3>
-            <p id="speakerText">朝の支度、帰宅後の照明、眠る前の音量まで、声ひとつで調整します。</p>
-            <div class="control-row">
-              <button id="speakerToggle" class="icon-button" type="button" aria-label="音声を再生または停止">
-                <span id="speakerIcon">▶</span>
-              </button>
-              <span id="speakerStatus">音声ガイドを再生</span>
+            <p id="speakerText">眠る前の音源を自動で整え、家族ごとの入眠リズムに合わせます。</p>
+            <div id="playlistList" class="playlist-list" aria-label="快眠用プレイリスト">
+              <button class="playlist-item" type="button">快眠用プレイリスト</button>
+              <button class="playlist-item" type="button">自然音</button>
+              <button class="playlist-item" type="button">雨音</button>
+              <button class="playlist-item" type="button">深夜のホワイトノイズ</button>
+              <button id="protocolBlank" class="playlist-item blank-item" type="button" hidden aria-label="空白のプレイリスト項目"></button>
+              <button id="protocolItem" class="playlist-item protocol-item" type="button" hidden>Lose Yourself Protocol</button>
             </div>
           </div>
         </article>
@@ -94,7 +96,27 @@
             <p class="card-kicker">Scene Sync</p>
             <h3>HOMURA Vision</h3>
             <p id="tvText">家族の時間帯に合わせて、画面の明るさとおすすめ映像を自動で整えます。</p>
-            <button id="tvTrigger" class="text-button" type="button" disabled>映像プレビュー</button>
+            <div id="videoPanel" class="sample-video" role="button" tabindex="0" aria-label="30秒のサンプル動画">
+              <div class="video-scene">
+                <span class="sun"></span>
+                <span class="ridge ridge-1"></span>
+                <span class="ridge ridge-2"></span>
+                <div id="tvOverlay" class="tv-subliminal" aria-hidden="true">
+                  <span>OBEY</span>
+                  <span>FOLLOW</span>
+                  <span>ADAPT</span>
+                  <span>SLEEP</span>
+                  <span>LISTEN</span>
+                </div>
+              </div>
+              <div class="video-controls">
+                <button id="videoToggle" class="text-button" type="button" disabled>再生</button>
+                <span id="videoTime">00:00 / 00:30</span>
+              </div>
+              <div id="videoTrack" class="video-track" aria-label="動画の再生位置">
+                <span id="videoProgress"></span>
+              </div>
+            </div>
           </div>
         </article>
 
@@ -124,7 +146,15 @@
           <p id="assistantText">
             HOMURA AIは家族の行動パターンを学習し、家電操作の手間を減らします。必要なときに、必要な設定だけを提示します。
           </p>
-          <button id="hiddenAiButton" class="text-button" type="button" disabled>最適化ログを確認</button>
+          <div class="chat-ui" aria-label="AIチャット">
+            <div class="chat-bubble ai">最適な睡眠環境を提案します。</div>
+            <div class="chat-bubble user">今夜は雨音で眠りたい。</div>
+            <div class="chat-bubble ai">照明を暗くし、室温を下げ、音声刺激を弱めます。</div>
+          </div>
+          <button id="integrationButton" class="text-button" type="button" disabled>
+            連携先一覧 <span id="integrationCount">0/5</span>
+          </button>
+          <button id="hiddenInstitute" class="institute-link" type="button" hidden>Institute for the Unfettered Mind</button>
         </div>
         <div class="ai-panel" id="aiPanel">
           <img id="aiImage" src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_ai_ui_800x600.png" alt="HOMURA AIの操作画面">
@@ -156,10 +186,10 @@
         <div class="truth-hero">
           <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_hero_truth_1200x500.png" alt="無機質な室内">
           <div>
-            <p class="eyebrow">Observation Layer</p>
-            <h2>HOMURAは生活を最適化していない。</h2>
+            <p class="eyebrow">EXPERIMENT RECORD</p>
+            <h2>スマートホームデバイスを用いた人間行動制御実験</h2>
             <p>
-              行動履歴、視聴傾向、会話の間、照明への反応。すべては快適さではなく、選択を誘導するために並べ替えられていた。
+              被験者の住環境に音声刺激、映像刺激、AI応答を配置。生活最適化を装い、選択、睡眠、探索傾向の変化を観測する。
             </p>
           </div>
         </div>
@@ -167,14 +197,28 @@
         <div class="truth-grid">
           <article>
             <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_ui_control_800x600.png" alt="監視画面風のUI">
-            <h3>Control UI</h3>
-            <p>「おすすめ」は、本人の希望ではなく次に起こしたい行動から逆算されている。</p>
+            <h3>SUBJECT STATUS</h3>
+            <p>被験者番号：HM-0427 / 精神安定度：安定 / 従順性：92% / 探索傾向：低下</p>
           </article>
           <article>
             <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_devices_truth_1200x800.png" alt="真相モードのデバイス群">
-            <h3>Device Mesh</h3>
-            <p>家の中のすべての入力がひとつの観測面として扱われている。</p>
+            <h3>STIMULUS RESPONSE</h3>
+            <p>夜間音声刺激：成功 / 映像刺激定着率：87% / 好奇心抑制：完了</p>
           </article>
+        </div>
+
+        <div class="status-board" aria-label="被験者ステータス">
+          <h3>SUBJECT STATUS</h3>
+          <dl>
+            <div><dt>被験者番号</dt><dd>HM-0427</dd></div>
+            <div><dt>精神安定度</dt><dd>安定</dd></div>
+            <div><dt>従順性スコア</dt><dd>92%</dd></div>
+            <div><dt>睡眠誘導成功率</dt><dd>87%</dd></div>
+            <div><dt>音声刺激反応</dt><dd>成功</dd></div>
+            <div><dt>映像刺激反応</dt><dd>定着</dd></div>
+            <div><dt>好奇心抑制率</dt><dd>完了</dd></div>
+            <div><dt>AI最適化ログ</dt><dd>探索傾向：低下 / 連携先開示反応：記録済み</dd></div>
+          </dl>
         </div>
 
         <div class="quote-share">
