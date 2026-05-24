@@ -84,7 +84,7 @@
               <button class="playlist-item" type="button">自然音</button>
               <button class="playlist-item" type="button">雨音</button>
               <button class="playlist-item" type="button">深夜のホワイトノイズ</button>
-              <button id="protocolBlank" class="playlist-item blank-item" type="button" hidden aria-label="空白のプレイリスト項目"></button>
+              <button id="protocolBlank" class="playlist-item blank-item" type="button" aria-label="空白のプレイリスト項目"></button>
               <button id="protocolItem" class="playlist-item protocol-item" type="button" hidden>Lose Yourself Protocol</button>
             </div>
           </div>
@@ -110,7 +110,7 @@
                 </div>
               </div>
               <div class="video-controls">
-                <button id="videoToggle" class="text-button" type="button" disabled>再生</button>
+                <button id="videoToggle" class="text-button" type="button">再生</button>
                 <span id="videoTime">00:00 / 00:30</span>
               </div>
               <div id="videoTrack" class="video-track" aria-label="動画の再生位置">
@@ -151,10 +151,28 @@
             <div class="chat-bubble user">今夜は雨音で眠りたい。</div>
             <div class="chat-bubble ai">照明を暗くし、室温を下げ、音声刺激を弱めます。</div>
           </div>
-          <button id="integrationButton" class="text-button" type="button" disabled>
-            連携先一覧 <span id="integrationCount">0/5</span>
-          </button>
-          <button id="hiddenInstitute" class="institute-link" type="button" hidden>Institute for the Unfettered Mind</button>
+          <div id="integrationTable" class="integration-table" aria-label="連携先一覧">
+            <div class="integration-row">
+              <span>HOMURA Light</span>
+              <strong>照明制御</strong>
+            </div>
+            <div class="integration-row">
+              <span>HOMURA Speaker</span>
+              <strong>音声環境</strong>
+            </div>
+            <div class="integration-row">
+              <span>HOMURA Vision</span>
+              <strong>映像同期</strong>
+            </div>
+            <div class="integration-row">
+              <span>HOMURA Lock</span>
+              <strong>在宅状態</strong>
+            </div>
+            <button id="hiddenInstituteRow" class="integration-row hidden-institute-row" type="button" hidden>
+              <span>Institute for the Unfettered Mind</span>
+              <strong>外部研究連携</strong>
+            </button>
+          </div>
         </div>
         <div class="ai-panel" id="aiPanel">
           <img id="aiImage" src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_ai_ui_800x600.png" alt="HOMURA AIの操作画面">

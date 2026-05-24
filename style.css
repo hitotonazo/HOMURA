@@ -354,11 +354,6 @@ h3 {
   display: grid;
   gap: 10px;
   margin-top: 14px;
-  opacity: 0.48;
-  pointer-events: none;
-}
-
-.sample-video.is-enabled {
   opacity: 1;
   pointer-events: auto;
 }
@@ -513,6 +508,82 @@ h3 {
 .chat-bubble.user {
   justify-self: end;
   background: rgba(47, 111, 99, 0.12);
+}
+
+.integration-table {
+  --scrub: 0;
+  position: relative;
+  display: grid;
+  gap: 1px;
+  margin-top: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--line);
+}
+
+.integration-table::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: calc(var(--scrub) * 0.38);
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 8px,
+      rgba(173, 47, 61, 0.18) 9px,
+      transparent 10px
+    );
+}
+
+.integration-table.is-sensitive {
+  cursor: ew-resize;
+}
+
+.integration-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 42px;
+  border: 0;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--text);
+  text-align: left;
+}
+
+.integration-row span {
+  min-width: 0;
+}
+
+.integration-row strong {
+  color: var(--muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.hidden-institute-row {
+  width: 100%;
+  color: #7c0606;
+  font-family: Consolas, "Courier New", monospace;
+  cursor: pointer;
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(6px);
+}
+
+.hidden-institute-row.is-visible {
+  animation: instituteEmerge 1.2s ease forwards;
+}
+
+@keyframes instituteEmerge {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
 }
 
 .institute-link {
