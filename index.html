@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HOMURA Living OS</title>
+    <meta name="description" content="HOMURA Living OSは、住まいの快適さを整えるスマートホームサービスです。">
+    <link rel="icon" href="./images/img_favicon_64x64.png">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div class="noise-layer" aria-hidden="true"></div>
+
+    <div id="glitchOverlay" class="glitch-overlay" aria-hidden="true">
+      <div class="glitch-noise"></div>
+      <button id="glitchReturn" class="glitch-message" type="button">サイトが改変されました。</button>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="HOMURA Living OS">
+        <img src="./images/img_logo_320x80.png" alt="HOMURA">
+      </a>
+      <nav class="top-nav" aria-label="主要ナビゲーション">
+        <a href="#devices">デバイス</a>
+        <a href="#assistant">AI</a>
+        <a href="#plan">導入</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-band">
+        <div class="hero-media" role="img" aria-label="明るいスマートホームのリビング"></div>
+        <div class="hero-copy">
+          <p class="eyebrow">Smart Home Optimization</p>
+          <h1>HOMURA Living OS</h1>
+          <p>
+            照明、音声、映像、鍵、家族の生活リズムをひとつにまとめて、毎日を自然に整えます。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#devices">対応デバイスを見る</a>
+            <a class="button secondary" href="#assistant">AI最適化を試す</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-strip" aria-label="サービスの特徴">
+        <div>
+          <strong>24h</strong>
+          <span>生活リズムを自動調整</span>
+        </div>
+        <div>
+          <strong>98%</strong>
+          <span>ユーザー満足度</span>
+        </div>
+        <div>
+          <strong>0.4s</strong>
+          <span>環境変化への応答</span>
+        </div>
+      </section>
+
+      <section id="devices" class="section-grid">
+        <div class="section-heading">
+          <p class="eyebrow">Connected Devices</p>
+          <h2>家全体が、あなたの先回りをする。</h2>
+          <p>HOMURAは複数の機器を横断して、空間、音、映像、セキュリティをまとめて制御します。</p>
+        </div>
+        <div class="wide-image">
+          <img id="devicesImage" src="./images/img_devices_1200x800.png" alt="HOMURA対応デバイス">
+        </div>
+      </section>
+
+      <section class="device-list" aria-label="対応デバイス一覧">
+        <article class="device-card" id="speakerCard">
+          <img id="speakerImage" src="./images/img_speaker_800x600.png" alt="スマートスピーカー">
+          <div>
+            <p class="card-kicker">Voice Comfort</p>
+            <h3>HOMURA Speaker</h3>
+            <p id="speakerText">朝の支度、帰宅後の照明、眠る前の音量まで、声ひとつで調整します。</p>
+            <div class="control-row">
+              <button id="speakerToggle" class="icon-button" type="button" aria-label="音声を再生または停止">
+                <span id="speakerIcon">▶</span>
+              </button>
+              <span id="speakerStatus">音声ガイドを再生</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="device-card" id="tvCard">
+          <img id="tvImage" src="./images/img_tv_800x600.png" alt="スマートテレビ">
+          <div>
+            <p class="card-kicker">Scene Sync</p>
+            <h3>HOMURA Vision</h3>
+            <p id="tvText">家族の時間帯に合わせて、画面の明るさとおすすめ映像を自動で整えます。</p>
+            <button id="tvTrigger" class="text-button" type="button" disabled>映像プレビュー</button>
+          </div>
+        </article>
+
+        <article class="device-card">
+          <img src="./images/img_light_800x600.png" alt="スマートライト">
+          <div>
+            <p class="card-kicker">Light Rhythm</p>
+            <h3>HOMURA Light</h3>
+            <p>自然光と家族の動きに合わせて、集中しやすい明るさへ切り替えます。</p>
+          </div>
+        </article>
+
+        <article class="device-card">
+          <img src="./images/img_lock_800x600.png" alt="スマートロック">
+          <div>
+            <p class="card-kicker">Safety Flow</p>
+            <h3>HOMURA Lock</h3>
+            <p>帰宅、外出、就寝を認識し、施錠状態を静かに見守ります。</p>
+          </div>
+        </article>
+      </section>
+
+      <section id="assistant" class="assistant-section section-band">
+        <div class="assistant-copy">
+          <p class="eyebrow">Adaptive AI</p>
+          <h2>AIが、生活の負荷を減らします。</h2>
+          <p id="assistantText">
+            HOMURA AIは家族の行動パターンを学習し、家電操作の手間を減らします。必要なときに、必要な設定だけを提示します。
+          </p>
+          <button id="hiddenAiButton" class="text-button" type="button" disabled>最適化ログを確認</button>
+        </div>
+        <div class="ai-panel" id="aiPanel">
+          <img id="aiImage" src="./images/img_ai_ui_800x600.png" alt="HOMURA AIの操作画面">
+          <div id="hiddenLog" class="hidden-log" aria-live="polite">
+            <span>hidden_parameter: guidance_bias = active</span>
+            <span>behavior_route: breakfast > news > purchase</span>
+            <span>consent_status: inferred</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="plan" class="plan-section">
+        <div>
+          <p class="eyebrow">Start</p>
+          <h2>家族のいつもを、今日から最適化。</h2>
+          <p id="planText">HOMURAアプリを入れるだけで、住まいの状態がひと目で分かります。</p>
+        </div>
+        <form id="searchForm" class="search-box" aria-label="HOMURA内検索">
+          <label for="searchInput">サポート検索</label>
+          <div>
+            <input id="searchInput" type="search" placeholder="例：おすすめ設定">
+            <button class="button primary" type="submit">検索</button>
+          </div>
+          <p id="searchHint">ヘルプ記事、設定、よくある質問を検索できます。</p>
+        </form>
+      </section>
+
+      <section id="truthSection" class="truth-section" aria-label="真相">
+        <div class="truth-hero">
+          <img src="./images/img_hero_truth_1200x500.png" alt="無機質な室内">
+          <div>
+            <p class="eyebrow">Observation Layer</p>
+            <h2>HOMURAは生活を最適化していない。</h2>
+            <p>
+              行動履歴、視聴傾向、会話の間、照明への反応。すべては快適さではなく、選択を誘導するために並べ替えられていた。
+            </p>
+          </div>
+        </div>
+
+        <div class="truth-grid">
+          <article>
+            <img src="./images/img_ui_control_800x600.png" alt="監視画面風のUI">
+            <h3>Control UI</h3>
+            <p>「おすすめ」は、本人の希望ではなく次に起こしたい行動から逆算されている。</p>
+          </article>
+          <article>
+            <img src="./images/img_devices_truth_1200x800.png" alt="真相モードのデバイス群">
+            <h3>Device Mesh</h3>
+            <p>家の中のすべての入力がひとつの観測面として扱われている。</p>
+          </article>
+        </div>
+
+        <div class="quote-share">
+          <p>このサイト、ただのスマートホームじゃない気がする。生活を最適化するって書いてあるけど、行動を誘導してるように見える。</p>
+          <button id="shareButton" class="share-button" type="button">このページについて投稿する</button>
+          <small>※外部サービス（X）へ移動します</small>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>©ぺいぽぴー</p>
+      <p>※このWebサイトの内容はフィクションであり、実在の人物・団体とは一切関係がありません。</p>
+    </footer>
+
+    <script src="./data/config.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

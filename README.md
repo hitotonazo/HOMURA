@@ -1,2 +1,29 @@
-# HOMURA
-おかしなサイト（スマートホームデバイス）
+# HOMURA Living OS
+
+スマートホームサービスの公式サイトを装った、1ページ完結型のARGサイトです。通常表示、違和感、真相の各状態を同一DOM内に持ち、ユーザー操作に応じて段階的にサイトが改変されます。
+
+## 構成
+
+- `index.html`: サイト本体
+- `style.css`: 通常テーマ、真相テーマ、ノイズ演出
+- `script.js`: フェーズ管理、ギミック制御、X共有処理
+- `data/config.js`: X共有用URLと投稿文
+- `images/`: サイト内画像
+
+## デプロイ方法
+
+Cloudflare Pagesなどの静的ホスティングに、このリポジトリのルートをそのまま配置してください。ビルドは不要です。
+
+- Build command: なし
+- Output directory: `/`
+
+## shareUrlの変更方法
+
+`data/config.js` の `shareUrl` だけを本番用URLに差し替えてください。
+
+```js
+const CONFIG = {
+  shareUrl: "本番ツイートURL",
+  shareText: "このサイト、ただのスマートホームじゃない気がする。生活を最適化するって書いてあるけど、行動を誘導してるように見える。"
+};
+```
