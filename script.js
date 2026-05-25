@@ -8,6 +8,7 @@ const body = document.body;
 const noiseOverlay = document.getElementById("noise-overlay");
 const speakerImage = document.getElementById("speakerImage");
 const speakerText = document.getElementById("speakerText");
+const playlistList = document.getElementById("playlistList");
 const protocolBlank = document.getElementById("protocolBlank");
 const protocolItem = document.getElementById("protocolItem");
 const tvText = document.getElementById("tvText");
@@ -34,6 +35,7 @@ let videoPlaying = false;
 let videoCurrentTime = 0;
 let videoTimer = null;
 let scrubCount = 0;
+let currentAudio = null;
 
 function assetUrl(fileName) {
   return `${ASSET_BASE_URL}/${fileName}`;
@@ -95,11 +97,13 @@ function applyPhase() {
   }
 
   if (phase === 4) {
-    applyTruthMode();
+    applyAlteredTop();
+    sessionStorage.setItem("homuraTruthReached", "1");
+    window.location.href = "./truth.html";
   }
 }
 
-function applyTruthMode() {
+function applyAlteredTop() {
   devicesImage.src = assetUrl("img_devices_truth_1200x800.png");
   document.querySelector(".hero-media").style.backgroundImage = `url('${assetUrl("img_hero_truth_1200x500.png")}')`;
 
@@ -121,7 +125,6 @@ function applyTruthMode() {
   searchInput.placeholder = "SUBJECT HM-0427";
   searchHint.textContent = "この記録はInstitute for the Unfettered Mindにより管理されています。";
   planText.textContent = "観測状態：継続。次回刺激配信まで 06:00:00。";
-  document.getElementById("truthSection").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function revealProtocol() {
@@ -133,6 +136,27 @@ function revealProtocol() {
   protocolItem.hidden = false;
   protocolItem.classList.add("is-revealing");
   applyPhase();
+}
+
+function playPlaylistAudio(event) {
+  const item = event.target.closest("[data-audio]");
+  if (!item) return;
+
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+
+  currentAudio = new Audio(item.dataset.audio);
+  currentAudio.loop = true;
+  currentAudio.volume = 0.45;
+  currentAudio.play().catch(() => {
+    speakerText.textContent = "ブラウザの設定により音声を開始できませんでした。もう一度選択してください。";
+  });
+
+  document.querySelectorAll(".playlist-item").forEach((button) => button.classList.remove("is-playing"));
+  item.classList.add("is-playing");
+  speakerText.textContent = `${item.textContent} を再生しています。`;
 }
 
 function activateProtocol() {
@@ -227,10 +251,19 @@ videoTrack.addEventListener("click", seekVideo);
 integrationTable.addEventListener("pointermove", scrubIntegrationList);
 integrationTable.addEventListener("touchmove", scrubIntegrationList);
 hiddenInstituteRow.addEventListener("click", activateInstitute);
-shareButton.addEventListener("click", shareToX);
+if (shareButton) {
+  shareButton.addEventListener("click", shareToX);
+}
 noiseOverlay.addEventListener("click", handleNoiseOverlayClick);
 
 videoPanel.classList.add("is-enabled");
 videoToggle.disabled = false;
 protocolBlank.hidden = false;
-applyPhase();
+playlistList.addEventListener("click", playPlaylistAudio);
+if (sessionStorage.getItem("homuraTruthReached") === "1") {
+  phase = 4;
+  body.classList.add("truth-mode");
+  applyAlteredTop();
+} else {
+  applyPhase();
+}

@@ -80,10 +80,10 @@
             <h3>HOMURA Speaker</h3>
             <p id="speakerText">眠る前の音源を自動で整え、家族ごとの入眠リズムに合わせます。</p>
             <div id="playlistList" class="playlist-list" aria-label="快眠用プレイリスト">
-              <button class="playlist-item" type="button">快眠用プレイリスト</button>
-              <button class="playlist-item" type="button">自然音</button>
-              <button class="playlist-item" type="button">雨音</button>
-              <button class="playlist-item" type="button">深夜のホワイトノイズ</button>
+              <button class="playlist-item" type="button" data-audio="./audio/sleep_playlist.wav">快眠用プレイリスト</button>
+              <button class="playlist-item" type="button" data-audio="./audio/nature_tone.wav">自然音</button>
+              <button class="playlist-item" type="button" data-audio="./audio/rain_tone.wav">雨音</button>
+              <button class="playlist-item" type="button" data-audio="./audio/white_noise.wav">深夜のホワイトノイズ</button>
               <button id="protocolBlank" class="playlist-item blank-item" type="button" aria-label="空白のプレイリスト項目"></button>
               <button id="protocolItem" class="playlist-item protocol-item" type="button" hidden>Lose Yourself Protocol</button>
             </div>
@@ -200,51 +200,6 @@
         </form>
       </section>
 
-      <section id="truthSection" class="truth-section" aria-label="真相">
-        <div class="truth-hero">
-          <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_hero_truth_1200x500.png" alt="無機質な室内">
-          <div>
-            <p class="eyebrow">EXPERIMENT RECORD</p>
-            <h2>スマートホームデバイスを用いた人間行動制御実験</h2>
-            <p>
-              被験者の住環境に音声刺激、映像刺激、AI応答を配置。生活最適化を装い、選択、睡眠、探索傾向の変化を観測する。
-            </p>
-          </div>
-        </div>
-
-        <div class="truth-grid">
-          <article>
-            <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_ui_control_800x600.png" alt="監視画面風のUI">
-            <h3>SUBJECT STATUS</h3>
-            <p>被験者番号：HM-0427 / 精神安定度：安定 / 従順性：92% / 探索傾向：低下</p>
-          </article>
-          <article>
-            <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_devices_truth_1200x800.png" alt="真相モードのデバイス群">
-            <h3>STIMULUS RESPONSE</h3>
-            <p>夜間音声刺激：成功 / 映像刺激定着率：87% / 好奇心抑制：完了</p>
-          </article>
-        </div>
-
-        <div class="status-board" aria-label="被験者ステータス">
-          <h3>SUBJECT STATUS</h3>
-          <dl>
-            <div><dt>被験者番号</dt><dd>HM-0427</dd></div>
-            <div><dt>精神安定度</dt><dd>安定</dd></div>
-            <div><dt>従順性スコア</dt><dd>92%</dd></div>
-            <div><dt>睡眠誘導成功率</dt><dd>87%</dd></div>
-            <div><dt>音声刺激反応</dt><dd>成功</dd></div>
-            <div><dt>映像刺激反応</dt><dd>定着</dd></div>
-            <div><dt>好奇心抑制率</dt><dd>完了</dd></div>
-            <div><dt>AI最適化ログ</dt><dd>探索傾向：低下 / 連携先開示反応：記録済み</dd></div>
-          </dl>
-        </div>
-
-        <div class="quote-share">
-          <p>このサイト、ただのスマートホームじゃない気がする。生活を最適化するって書いてあるけど、行動を誘導してるように見える。</p>
-          <button id="shareButton" class="share-button" type="button">このページについて投稿する</button>
-          <small>※外部サービス（X）へ移動します</small>
-        </div>
-      </section>
     </main>
 
     <footer class="site-footer">
