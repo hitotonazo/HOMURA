@@ -1,6 +1,7 @@
 let phase = 0;
 
 const ASSET_BASE_URL = "https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images";
+const VIDEO_BASE_URL = "https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/videos";
 const ANOMALY_START = 16.0;
 const ANOMALY_END = 17.0;
 
@@ -38,9 +39,14 @@ let noiseNextAction = null;
 let protocolRevealed = false;
 let scrubCount = 0;
 let currentAudio = null;
+let anomalyVideoLoaded = false;
 
 function assetUrl(fileName) {
   return `${ASSET_BASE_URL}/${fileName}`;
+}
+
+function videoUrl(fileName) {
+  return `${VIDEO_BASE_URL}/${fileName}`;
 }
 
 function showAlteration(nextPhase) {
@@ -90,6 +96,7 @@ function applyPhase() {
   if (phase >= 2) {
     tvText.textContent = "30秒の自然風景サンプルです。停止位置によっては、未処理フレームが残る場合があります。";
     videoPanel.classList.add("has-anomaly");
+    loadAnomalyVideo();
   }
 
   if (phase >= 3) {
@@ -103,6 +110,23 @@ function applyPhase() {
     sessionStorage.setItem("homuraTruthReached", "1");
     window.location.href = "./truth.html";
   }
+}
+
+function loadAnomalyVideo() {
+  if (anomalyVideoLoaded) return;
+
+  const wasPaused = sampleVideo.paused;
+  const previousTime = sampleVideo.currentTime || 0;
+  sampleVideo.src = videoUrl("anomaly.mp4");
+  sampleVideo.load();
+  sampleVideo.addEventListener("loadedmetadata", () => {
+    sampleVideo.currentTime = Math.min(previousTime, sampleVideo.duration || previousTime);
+    updateVideoDisplay();
+    if (!wasPaused) {
+      sampleVideo.play();
+    }
+  }, { once: true });
+  anomalyVideoLoaded = true;
 }
 
 function applyAlteredTop() {
