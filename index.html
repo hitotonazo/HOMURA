@@ -27,6 +27,8 @@
         <a href="#devices">デバイス</a>
         <a href="#assistant">AI</a>
         <a href="#plan">導入</a>
+        <button id="resetStateButton" class="header-button" type="button">探索状態リセット</button>
+        <button id="delayedGlitchButton" class="header-button" type="button">5秒後に改変演出</button>
       </nav>
     </header>
 
@@ -98,18 +100,7 @@
             <h3>HOMURA Vision</h3>
             <p id="tvText">家族の時間帯に合わせて、画面の明るさとおすすめ映像を自動で整えます。</p>
             <div id="videoPanel" class="sample-video" role="button" tabindex="0" aria-label="30秒のサンプル動画">
-              <div class="video-scene">
-                <span class="sun"></span>
-                <span class="ridge ridge-1"></span>
-                <span class="ridge ridge-2"></span>
-                <div id="tvOverlay" class="tv-subliminal" aria-hidden="true">
-                  <span>OBEY</span>
-                  <span>FOLLOW</span>
-                  <span>ADAPT</span>
-                  <span>SLEEP</span>
-                  <span>LISTEN</span>
-                </div>
-              </div>
+              <video id="sampleVideo" class="sample-video-player" src="./videos/homura_sample.mp4" poster="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_tv_800x600.png" preload="metadata" controls playsinline></video>
               <div class="video-controls">
                 <button id="videoToggle" class="text-button" type="button">再生</button>
                 <span id="videoTime">00:00 / 00:30</span>
@@ -147,11 +138,7 @@
           <p id="assistantText">
             HOMURA AIは家族の行動パターンを学習し、家電操作の手間を減らします。必要なときに、必要な設定だけを提示します。
           </p>
-          <div class="chat-ui" aria-label="AIチャット">
-            <div class="chat-bubble ai">最適な睡眠環境を提案します。</div>
-            <div class="chat-bubble user">今夜は雨音で眠りたい。</div>
-            <div class="chat-bubble ai">照明を暗くし、室温を下げ、音声刺激を弱めます。</div>
-          </div>
+          <h3 class="data-link-title">データ連携一覧</h3>
           <div id="integrationTable" class="integration-table" aria-label="連携先一覧">
             <div class="integration-row">
               <span>HOMURA Light</span>
@@ -199,6 +186,10 @@
           </div>
           <p id="searchHint">ヘルプ記事、設定、よくある質問を検索できます。</p>
         </form>
+        <div class="purchase-box">
+          <button id="purchaseButton" class="button primary" type="button">HOMURAを購入する</button>
+          <p id="purchaseMessage" aria-live="polite"></p>
+        </div>
       </section>
 
     </main>

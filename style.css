@@ -65,6 +65,7 @@ a {
 .top-nav {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 18px;
   color: var(--muted);
   font-size: 0.92rem;
@@ -72,6 +73,22 @@ a {
 
 .top-nav a:hover {
   color: var(--accent-strong);
+}
+
+.header-button {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+
+.header-button:hover {
+  color: var(--accent-strong);
+  border-color: var(--accent);
 }
 
 .section-band,
@@ -376,6 +393,16 @@ h3 {
   pointer-events: auto;
 }
 
+.sample-video-player {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #101010;
+  object-fit: cover;
+}
+
 .video-scene {
   position: relative;
   min-height: 190px;
@@ -526,6 +553,11 @@ h3 {
 .chat-bubble.user {
   justify-self: end;
   background: rgba(47, 111, 99, 0.12);
+}
+
+.data-link-title {
+  margin: 18px 0 8px;
+  font-size: 1.04rem;
 }
 
 .integration-table {
@@ -686,6 +718,23 @@ h3 {
   border-radius: 6px;
   padding: 10px 12px;
   background: #fff;
+}
+
+.purchase-box {
+  display: grid;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.purchase-box .button {
+  width: 100%;
+}
+
+.purchase-box p {
+  min-height: 1.7em;
+  margin: 0;
+  color: var(--accent-strong);
+  font-weight: 700;
 }
 
 .truth-section {
@@ -1097,6 +1146,36 @@ h3 {
   padding: 58px 0 34px;
 }
 
+.paper-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 18px;
+  background: var(--line);
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.paper-meta div {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  background: rgba(8, 8, 8, 0.88);
+}
+
+.paper-meta span {
+  color: #888;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.paper-meta strong {
+  color: #eee;
+  font-size: 0.88rem;
+}
+
 .record-hero img,
 .record-card img {
   width: 100%;
@@ -1140,6 +1219,10 @@ h3 {
   border-radius: 8px;
   padding: 16px;
   background: rgba(18, 18, 18, 0.82);
+}
+
+.record-panel {
+  border-left: 3px solid rgba(213, 91, 102, 0.58);
 }
 
 .record-panel h2,
@@ -1212,7 +1295,8 @@ h3 {
   .plan-section,
   .truth-hero,
   .record-hero,
-  .record-layout {
+  .record-layout,
+  .paper-meta {
     grid-template-columns: 1fr;
   }
 

@@ -1,8 +1,8 @@
 let phase = 0;
 
 const ASSET_BASE_URL = "https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images";
-const ANOMALY_START = 14.0;
-const ANOMALY_END = 15.0;
+const ANOMALY_START = 16.0;
+const ANOMALY_END = 17.0;
 
 const body = document.body;
 const noiseOverlay = document.getElementById("noise-overlay");
@@ -14,11 +14,11 @@ const protocolBlank = document.getElementById("protocolBlank");
 const protocolItem = document.getElementById("protocolItem");
 const tvText = document.getElementById("tvText");
 const videoPanel = document.getElementById("videoPanel");
+const sampleVideo = document.getElementById("sampleVideo");
 const videoToggle = document.getElementById("videoToggle");
 const videoTime = document.getElementById("videoTime");
 const videoTrack = document.getElementById("videoTrack");
 const videoProgress = document.getElementById("videoProgress");
-const tvOverlay = document.getElementById("tvOverlay");
 const aiImage = document.getElementById("aiImage");
 const assistantText = document.getElementById("assistantText");
 const integrationTable = document.getElementById("integrationTable");
@@ -29,12 +29,13 @@ const searchHint = document.getElementById("searchHint");
 const devicesImage = document.getElementById("devicesImage");
 const planText = document.getElementById("planText");
 const shareButton = document.getElementById("shareButton");
+const resetStateButton = document.getElementById("resetStateButton");
+const delayedGlitchButton = document.getElementById("delayedGlitchButton");
+const purchaseButton = document.getElementById("purchaseButton");
+const purchaseMessage = document.getElementById("purchaseMessage");
 
 let noiseNextAction = null;
 let protocolRevealed = false;
-let videoPlaying = false;
-let videoCurrentTime = 0;
-let videoTimer = null;
 let scrubCount = 0;
 let currentAudio = null;
 
@@ -186,36 +187,26 @@ function activateProtocol(event) {
 }
 
 function toggleVideo() {
-  videoPlaying = !videoPlaying;
-  videoToggle.textContent = videoPlaying ? "停止" : "再生";
-  videoPanel.classList.toggle("is-playing", videoPlaying);
-
-  if (videoPlaying) {
-    videoTimer = window.setInterval(tickVideo, 100);
+  if (sampleVideo.paused) {
+    sampleVideo.play();
   } else {
-    window.clearInterval(videoTimer);
+    sampleVideo.pause();
   }
-}
-
-function tickVideo() {
-  videoCurrentTime += 0.1;
-  if (videoCurrentTime >= 30) {
-    videoCurrentTime = 0;
-  }
-  updateVideoDisplay();
 }
 
 function updateVideoDisplay() {
-  const seconds = Math.floor(videoCurrentTime).toString().padStart(2, "0");
-  videoTime.textContent = `00:${seconds} / 00:30`;
-  videoProgress.style.width = `${(videoCurrentTime / 30) * 100}%`;
-
-  const inAnomaly = phase >= 2 && videoCurrentTime >= ANOMALY_START && videoCurrentTime <= ANOMALY_END;
-  tvOverlay.classList.toggle("is-visible", inAnomaly);
+  const current = sampleVideo.currentTime || 0;
+  const duration = sampleVideo.duration && Number.isFinite(sampleVideo.duration) ? sampleVideo.duration : 30;
+  const seconds = Math.floor(current).toString().padStart(2, "0");
+  const total = Math.floor(duration).toString().padStart(2, "0");
+  videoTime.textContent = `00:${seconds} / 00:${total}`;
+  videoProgress.style.width = `${Math.min(100, (current / duration) * 100)}%`;
+  videoToggle.textContent = sampleVideo.paused ? "再生" : "停止";
+  videoPanel.classList.toggle("is-playing", !sampleVideo.paused);
 }
 
 function handleVideoPanelClick() {
-  const pausedNearAnomaly = !videoPlaying && videoCurrentTime >= ANOMALY_START - 0.8 && videoCurrentTime <= ANOMALY_END + 0.8;
+  const pausedNearAnomaly = sampleVideo.paused && sampleVideo.currentTime >= ANOMALY_START && sampleVideo.currentTime <= ANOMALY_END;
   if (phase === 2 && pausedNearAnomaly) {
     showAlteration(3);
   }
@@ -225,7 +216,8 @@ function seekVideo(event) {
   event.stopPropagation();
   const rect = videoTrack.getBoundingClientRect();
   const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-  videoCurrentTime = ratio * 30;
+  const duration = sampleVideo.duration && Number.isFinite(sampleVideo.duration) ? sampleVideo.duration : 30;
+  sampleVideo.currentTime = ratio * duration;
   updateVideoDisplay();
 }
 
@@ -254,6 +246,26 @@ function shareToX() {
   window.open(url, "_blank", "noopener,noreferrer");
 }
 
+function resetExplorationState() {
+  sessionStorage.removeItem("homuraTruthReached");
+  window.location.href = "./index.html";
+}
+
+function scheduleGlitchDemo() {
+  delayedGlitchButton.disabled = true;
+  delayedGlitchButton.textContent = "5秒後に実行中";
+  window.setTimeout(() => {
+    runSiteAlteredOverlay(() => {
+      delayedGlitchButton.disabled = false;
+      delayedGlitchButton.textContent = "5秒後に改変演出";
+    });
+  }, 5000);
+}
+
+function showPurchaseMessage() {
+  purchaseMessage.textContent = "ご購入ありがとうございます。近日中にお届けにまいります。";
+}
+
 protocolBlank.addEventListener("click", revealProtocol);
 protocolItem.addEventListener("click", activateProtocol);
 audioStop.addEventListener("click", stopCurrentAudio);
@@ -269,6 +281,9 @@ videoPanel.addEventListener("keydown", (event) => {
   }
 });
 videoTrack.addEventListener("click", seekVideo);
+sampleVideo.addEventListener("timeupdate", updateVideoDisplay);
+sampleVideo.addEventListener("play", updateVideoDisplay);
+sampleVideo.addEventListener("pause", updateVideoDisplay);
 integrationTable.addEventListener("pointermove", scrubIntegrationList);
 integrationTable.addEventListener("touchmove", scrubIntegrationList);
 hiddenInstituteRow.addEventListener("click", activateInstitute);
@@ -276,6 +291,9 @@ if (shareButton) {
   shareButton.addEventListener("click", shareToX);
 }
 noiseOverlay.addEventListener("click", handleNoiseOverlayClick);
+resetStateButton.addEventListener("click", resetExplorationState);
+delayedGlitchButton.addEventListener("click", scheduleGlitchDemo);
+purchaseButton.addEventListener("click", showPurchaseMessage);
 
 videoPanel.classList.add("is-enabled");
 videoToggle.disabled = false;
