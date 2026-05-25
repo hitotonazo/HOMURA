@@ -78,15 +78,16 @@
           <div>
             <p class="card-kicker">Voice Comfort</p>
             <h3>HOMURA Speaker</h3>
-            <p id="speakerText">眠る前の音源を自動で整え、家族ごとの入眠リズムに合わせます。</p>
+            <p id="speakerText">眠る前の音源を自動で整え、家族ごとの入眠リズムに合わせます。実際に音楽が鳴ります。ご注意ください。</p>
             <div id="playlistList" class="playlist-list" aria-label="快眠用プレイリスト">
               <button class="playlist-item" type="button" data-audio="./audio/sleep_playlist.wav">快眠用プレイリスト</button>
               <button class="playlist-item" type="button" data-audio="./audio/nature_tone.wav">自然音</button>
               <button class="playlist-item" type="button" data-audio="./audio/rain_tone.wav">雨音</button>
               <button class="playlist-item" type="button" data-audio="./audio/white_noise.wav">深夜のホワイトノイズ</button>
               <button id="protocolBlank" class="playlist-item blank-item" type="button" aria-label="空白のプレイリスト項目"></button>
-              <button id="protocolItem" class="playlist-item protocol-item" type="button" hidden>Lose Yourself Protocol</button>
+              <button id="protocolItem" class="playlist-item protocol-item" type="button" data-audio="./audio/lose_yourself_protocol.wav" hidden>Lose Yourself Protocol</button>
             </div>
+            <button id="audioStop" class="text-button audio-stop" type="button">音源を停止</button>
           </div>
         </article>
 

@@ -9,6 +9,7 @@ const noiseOverlay = document.getElementById("noise-overlay");
 const speakerImage = document.getElementById("speakerImage");
 const speakerText = document.getElementById("speakerText");
 const playlistList = document.getElementById("playlistList");
+const audioStop = document.getElementById("audioStop");
 const protocolBlank = document.getElementById("protocolBlank");
 const protocolItem = document.getElementById("protocolItem");
 const tvText = document.getElementById("tvText");
@@ -138,6 +139,16 @@ function revealProtocol() {
   applyPhase();
 }
 
+function stopCurrentAudio() {
+  if (!currentAudio) return;
+
+  currentAudio.pause();
+  currentAudio.currentTime = 0;
+  currentAudio = null;
+  document.querySelectorAll(".playlist-item").forEach((button) => button.classList.remove("is-playing"));
+  speakerText.textContent = "音源を停止しました。実際に音楽が鳴ります。ご注意ください。";
+}
+
 function playPlaylistAudio(event) {
   const item = event.target.closest("[data-audio]");
   if (!item) return;
@@ -159,7 +170,16 @@ function playPlaylistAudio(event) {
   speakerText.textContent = `${item.textContent} を再生しています。`;
 }
 
-function activateProtocol() {
+function activateProtocol(event) {
+  if (event) {
+    window.setTimeout(() => {
+      if (protocolRevealed && phase === 1) {
+        showAlteration(2);
+      }
+    }, 450);
+    return;
+  }
+
   if (protocolRevealed && phase === 1) {
     showAlteration(2);
   }
@@ -236,6 +256,7 @@ function shareToX() {
 
 protocolBlank.addEventListener("click", revealProtocol);
 protocolItem.addEventListener("click", activateProtocol);
+audioStop.addEventListener("click", stopCurrentAudio);
 videoToggle.addEventListener("click", (event) => {
   event.stopPropagation();
   toggleVideo();
