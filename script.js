@@ -117,27 +117,7 @@ function applyPhase() {
 }
 
 function applyAlteredTop() {
-  devicesImage.src = assetUrl("img_devices_truth_1200x800.png");
-  document.querySelector(".hero-media").style.backgroundImage = `url('${assetUrl("img_hero_truth_1200x500.png")}')`;
-
-  document.querySelector(".hero .eyebrow").textContent = "Behavior Control Record";
-  document.querySelector(".hero h1").textContent = "HOMURA OBSERVATION LOG";
-  document.querySelector(".hero-copy p:not(.eyebrow)").textContent =
-    "VA answer territories製スマートホームデバイスを用いた人間行動制御実験の記録ページ。音声、映像、AI応答による誘導結果を表示しています。";
-
-  document.querySelector("#devices .section-heading .eyebrow").textContent = "SUBJECT STATUS";
-  document.querySelector("#devices h2").textContent = "被験者番号：HM-0427";
-  document.querySelector("#devices .section-heading p").textContent =
-    "精神安定度：安定 / 従順性スコア：92% / 睡眠誘導成功率：87% / 好奇心抑制：完了";
-
-  speakerText.textContent = "夜間音声刺激：成功。反復再生後、自己選択感を維持したまま睡眠移行を確認。";
-  tvText.textContent = "映像刺激反応：定着率87%。1秒未満の命令語挿入に対する視線停止を確認。";
-  assistantText.textContent = "AI最適化ログ：探索傾向は低下。連携先開示への反応は好奇心抑制プロトコルへ移行済み。";
-
-  hiddenLog.classList.add("is-visible");
-  searchInput.placeholder = "SUBJECT HM-0427";
-  searchHint.textContent = "この記録はVA answer territoriesおよびInstitute for the Unfettered Mindにより管理されています。";
-  planText.textContent = "観測状態：継続。次回刺激配信まで 06:00:00。";
+  body.classList.add("truth-mode");
 }
 
 function loadAnomalyAllVideo() {
