@@ -27,7 +27,6 @@ const integrationTable = document.getElementById("integrationTable");
 const hiddenInstituteRow = document.getElementById("hiddenInstituteRow");
 const hiddenLog = document.getElementById("hiddenLog");
 const resetStateButton = document.getElementById("resetStateButton");
-const delayedGlitchButton = document.getElementById("delayedGlitchButton");
 const purchaseButton = document.getElementById("purchaseButton");
 const purchaseMessage = document.getElementById("purchaseMessage");
 
@@ -296,17 +295,6 @@ function resetExplorationState() {
   window.location.href = "./index.html";
 }
 
-function scheduleGlitchDemo() {
-  delayedGlitchButton.disabled = true;
-  delayedGlitchButton.textContent = "5秒後に実行中";
-  window.setTimeout(() => {
-    runSiteAlteredOverlay(() => {
-      delayedGlitchButton.disabled = false;
-      delayedGlitchButton.textContent = "5秒後に改変演出";
-    });
-  }, 5000);
-}
-
 function showPurchaseMessage() {
   purchaseMessage.textContent = "ご購入ありがとうございます。近日中にお届けにまいります。";
 }
@@ -338,7 +326,6 @@ integrationTable.addEventListener("touchmove", scrubIntegrationList);
 hiddenInstituteRow.addEventListener("click", activateInstitute);
 noiseOverlay.addEventListener("click", handleNoiseOverlayClick);
 resetStateButton.addEventListener("click", resetExplorationState);
-delayedGlitchButton.addEventListener("click", scheduleGlitchDemo);
 purchaseButton.addEventListener("click", showPurchaseMessage);
 
 videoPanel.classList.add("is-enabled");
