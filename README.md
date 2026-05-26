@@ -17,7 +17,8 @@
   - `white_noise.wav`
   - `lose_yourself_protocol.wav`
 - `videos/homura_sample.mp4`: HOMURA Vision用通常サンプル動画（R2参照）
-- `videos/anomaly.mp4`: 通常動画の16.00〜17.00秒区間で挿入再生し、その区間で停止した場合に無限ループする1秒異常動画（R2参照）
+- `videos/anomalyall.mp4`: 違和感②で表示する異常入り全体動画（R2参照）
+- `videos/anomaly.mp4`: 16.00〜17.00秒で停止した場合に無限ループする1秒異常動画（R2参照）
 
 サイト内の画像参照は、Cloudflare R2の公開開発URL `https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/` を使用しています。
 

@@ -42,7 +42,7 @@ let scrubCount = 0;
 let currentAudio = null;
 let anomalyLoopActive = false;
 let anomalyArmedAt = null;
-let videoMode = "normal";
+let anomalyAllLoaded = false;
 let switchingVideoSource = false;
 
 function assetUrl(fileName) {
@@ -100,6 +100,7 @@ function applyPhase() {
   if (phase >= 2) {
     tvText.textContent = "29秒の自然風景サンプルです。停止位置によっては、未処理フレームが残る場合があります。";
     videoPanel.classList.add("has-anomaly");
+    loadAnomalyAllVideo();
   }
 
   if (phase >= 3) {
@@ -137,6 +138,30 @@ function applyAlteredTop() {
   searchInput.placeholder = "SUBJECT HM-0427";
   searchHint.textContent = "この記録はVA answer territoriesおよびInstitute for the Unfettered Mindにより管理されています。";
   planText.textContent = "観測状態：継続。次回刺激配信まで 06:00:00。";
+}
+
+function loadAnomalyAllVideo() {
+  if (anomalyAllLoaded) return;
+
+  const wasPaused = sampleVideo.paused;
+  const previousTime = sampleVideo.currentTime || 0;
+  switchingVideoSource = true;
+  sampleVideo.loop = false;
+  sampleVideo.controls = true;
+  sampleVideo.src = videoUrl("anomalyall.mp4");
+  sampleVideo.load();
+  sampleVideo.addEventListener("loadedmetadata", () => {
+    sampleVideo.currentTime = Math.min(previousTime, sampleVideo.duration || previousTime);
+    switchingVideoSource = false;
+    updateVideoDisplay();
+    if (!wasPaused) {
+      sampleVideo.play();
+    }
+  }, { once: true });
+  window.setTimeout(() => {
+    switchingVideoSource = false;
+  }, 1200);
+  anomalyAllLoaded = true;
 }
 
 function revealProtocol() {
@@ -210,7 +235,7 @@ function toggleVideo() {
 }
 
 function updateVideoDisplay() {
-  const current = videoMode === "normal" ? sampleVideo.currentTime || 0 : ANOMALY_START + (sampleVideo.currentTime || 0);
+  const current = anomalyLoopActive ? anomalyArmedAt || ANOMALY_START : sampleVideo.currentTime || 0;
   const duration = NORMAL_VIDEO_DURATION;
   const seconds = Math.floor(current).toString().padStart(2, "0");
   const total = Math.floor(duration).toString().padStart(2, "0");
@@ -220,13 +245,6 @@ function updateVideoDisplay() {
   videoPanel.classList.toggle("is-playing", !sampleVideo.paused);
   videoPanel.classList.toggle("is-looping-anomaly", anomalyLoopActive);
 
-  if (phase === 2 && videoMode === "normal" && !sampleVideo.paused && current >= ANOMALY_START && current < ANOMALY_END) {
-    playAnomalyInsert(current);
-  }
-
-  if (phase === 2 && videoMode === "anomaly-preview" && !sampleVideo.paused && sampleVideo.currentTime >= ANOMALY_END - ANOMALY_START) {
-    returnToNormalVideo();
-  }
 }
 
 function handleVideoPanelClick() {
@@ -247,55 +265,15 @@ function seekVideo(event) {
 function handleVideoPause() {
   if (phase !== 2 || anomalyLoopActive || switchingVideoSource) return;
 
-  if (videoMode === "anomaly-preview") {
-    startAnomalyLoop();
-    return;
-  }
-
   const stoppedInAnomalyWindow = sampleVideo.currentTime >= ANOMALY_START && sampleVideo.currentTime <= ANOMALY_END;
   if (stoppedInAnomalyWindow) {
     startAnomalyLoop();
   }
 }
 
-function playAnomalyInsert(displayTime) {
-  videoMode = "anomaly-preview";
-  anomalyArmedAt = displayTime;
-  sampleVideo.loop = false;
-  sampleVideo.controls = true;
-  switchingVideoSource = true;
-  sampleVideo.src = videoUrl("anomaly.mp4");
-  sampleVideo.load();
-  sampleVideo.addEventListener("loadedmetadata", () => {
-    sampleVideo.currentTime = Math.min(Math.max(displayTime - ANOMALY_START, 0), Math.max((sampleVideo.duration || 1) - 0.05, 0));
-    switchingVideoSource = false;
-    sampleVideo.play();
-    updateVideoDisplay();
-  }, { once: true });
-}
-
-function returnToNormalVideo() {
-  videoMode = "normal";
-  anomalyLoopActive = false;
-  anomalyArmedAt = null;
-  sampleVideo.loop = false;
-  sampleVideo.controls = true;
-  switchingVideoSource = true;
-  sampleVideo.src = videoUrl("homura_sample.mp4");
-  sampleVideo.load();
-  sampleVideo.addEventListener("loadedmetadata", () => {
-    sampleVideo.currentTime = ANOMALY_END;
-    switchingVideoSource = false;
-    sampleVideo.play();
-    updateVideoDisplay();
-  }, { once: true });
-}
-
 function startAnomalyLoop() {
-  const displayTime = videoMode === "normal" ? sampleVideo.currentTime : ANOMALY_START + (sampleVideo.currentTime || 0);
   anomalyLoopActive = true;
-  videoMode = "anomaly-loop";
-  anomalyArmedAt = Math.min(ANOMALY_END, Math.max(ANOMALY_START, displayTime));
+  anomalyArmedAt = Math.min(ANOMALY_END, Math.max(ANOMALY_START, sampleVideo.currentTime));
   sampleVideo.loop = true;
   sampleVideo.controls = false;
   tvText.textContent = "異常フレームが固定されました。映像を確認してください。";
@@ -310,6 +288,9 @@ function startAnomalyLoop() {
     sampleVideo.play();
     updateVideoDisplay();
   }, { once: true });
+  window.setTimeout(() => {
+    switchingVideoSource = false;
+  }, 1200);
   if (sampleVideo.readyState >= 1) {
     sampleVideo.currentTime = 0;
     sampleVideo.play();
