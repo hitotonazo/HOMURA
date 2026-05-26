@@ -67,7 +67,7 @@
         <div class="section-heading">
           <p class="eyebrow">Connected Devices</p>
           <h2>家全体が、あなたの先回りをする。</h2>
-          <p>HOMURAは複数の機器を横断して、空間、音、映像、セキュリティをまとめて制御します。</p>
+          <p>HOMURAは複数の機器を横断し、空間、音、映像、セキュリティをまとめて制御します。</p>
         </div>
         <div class="wide-image">
           <img id="devicesImage" src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_devices_1200x800.png" alt="HOMURA対応デバイス">
@@ -141,10 +141,6 @@
           <h3 class="data-link-title">データ連携一覧</h3>
           <div id="integrationTable" class="integration-table" aria-label="連携先一覧">
             <div class="integration-row">
-              <span>VA answer territories</span>
-              <strong>開発元</strong>
-            </div>
-            <div class="integration-row">
               <span>HOMURA Light</span>
               <strong>照明制御</strong>
             </div>
@@ -161,17 +157,21 @@
               <strong>在宅状態</strong>
             </div>
             <button id="hiddenInstituteRow" class="integration-row hidden-institute-row" type="button" hidden>
-              <span>Institute for the Unfettered Mind</span>
-              <strong>外部研究連携</strong>
+              <span>VA</span>
+              <strong>未承認連携</strong>
             </button>
           </div>
         </div>
         <div class="ai-panel" id="aiPanel">
           <img id="aiImage" src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_ai_ui_800x600.png" alt="HOMURA AIの操作画面">
           <div id="hiddenLog" class="hidden-log" aria-live="polite">
-            <span>hidden_parameter: guidance_bias = active</span>
-            <span>behavior_route: breakfast > news > purchase</span>
-            <span>consent_status: inferred</span>
+            <strong>連携情報一覧</strong>
+            <span>sleep_log: 入眠時刻 / 中途覚醒 / 起床時刻</span>
+            <span>location_state: 在宅 / 外出 / 帰宅予定</span>
+            <span>lock_history: 解錠時刻 / 施錠忘れ / 同居者動線</span>
+            <span>voice_response: 呼吸音 / 返答速度 / 音声刺激反応</span>
+            <span>vision_pause: 停止秒数 / 注視傾向 / 再生履歴</span>
+            <span>purchase_route: 検索語 / 購入反応 / 誘導成功率</span>
           </div>
         </div>
       </section>
@@ -182,20 +182,11 @@
           <h2>家族のいつもを、今日から最適化。</h2>
           <p id="planText">HOMURAアプリを入れるだけで、住まいの状態がひと目で分かります。</p>
         </div>
-        <form id="searchForm" class="search-box" aria-label="HOMURA内検索">
-          <label for="searchInput">サポート検索</label>
-          <div>
-            <input id="searchInput" type="search" placeholder="例：おすすめ設定">
-            <button class="button primary" type="submit">検索</button>
-          </div>
-          <p id="searchHint">ヘルプ記事、設定、よくある質問を検索できます。</p>
-        </form>
         <div class="purchase-box">
           <button id="purchaseButton" class="button primary" type="button">HOMURAを購入する</button>
           <p id="purchaseMessage" aria-live="polite"></p>
         </div>
       </section>
-
     </main>
 
     <footer class="site-footer">

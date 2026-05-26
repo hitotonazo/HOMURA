@@ -683,6 +683,12 @@ h3 {
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
+.hidden-log strong {
+  color: #fff;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
 .hidden-log.is-visible {
   opacity: 1;
   transform: translateY(0);
@@ -1448,7 +1454,7 @@ h3 {
 }
 
 .report-table tbody {
-  opacity: 0.12;
+  opacity: 1;
 }
 
 .report-table th,

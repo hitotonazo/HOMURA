@@ -18,19 +18,14 @@ const tvText = document.getElementById("tvText");
 const videoPanel = document.getElementById("videoPanel");
 const sampleVideo = document.getElementById("sampleVideo");
 const videoToggle = document.getElementById("videoToggle");
-const videoTime = document.getElementById("videoTime");
 const videoTrack = document.getElementById("videoTrack");
+const videoTime = document.getElementById("videoTime");
 const videoProgress = document.getElementById("videoProgress");
 const aiImage = document.getElementById("aiImage");
 const assistantText = document.getElementById("assistantText");
 const integrationTable = document.getElementById("integrationTable");
 const hiddenInstituteRow = document.getElementById("hiddenInstituteRow");
 const hiddenLog = document.getElementById("hiddenLog");
-const searchInput = document.getElementById("searchInput");
-const searchHint = document.getElementById("searchHint");
-const devicesImage = document.getElementById("devicesImage");
-const planText = document.getElementById("planText");
-const shareButton = document.getElementById("shareButton");
 const resetStateButton = document.getElementById("resetStateButton");
 const delayedGlitchButton = document.getElementById("delayedGlitchButton");
 const purchaseButton = document.getElementById("purchaseButton");
@@ -94,7 +89,7 @@ function applyPhase() {
 
   if (phase >= 1) {
     speakerImage.src = assetUrl("img_speaker_alt_800x600.png");
-    speakerText.textContent = "睡眠音源の一部に、分類されていない項目が混在しています。";
+    speakerText.textContent = "睡眠音源の一部に、分類されていない項目が混在しています。実際に音楽が鳴ります。ご注意ください。";
   }
 
   if (phase >= 2) {
@@ -183,7 +178,7 @@ function playPlaylistAudio(event) {
 
   document.querySelectorAll(".playlist-item").forEach((button) => button.classList.remove("is-playing"));
   item.classList.add("is-playing");
-  speakerText.textContent = `${item.textContent} を再生しています。`;
+  speakerText.textContent = `${item.textContent} を再生しています。実際に音楽が鳴ります。ご注意ください。`;
 }
 
 function activateProtocol(event) {
@@ -224,7 +219,6 @@ function updateVideoDisplay() {
   videoToggle.textContent = anomalyLoopActive ? "確認" : sampleVideo.paused ? "再生" : "停止";
   videoPanel.classList.toggle("is-playing", !sampleVideo.paused);
   videoPanel.classList.toggle("is-looping-anomaly", anomalyLoopActive);
-
 }
 
 function handleVideoPanelClick() {
@@ -297,12 +291,6 @@ function activateInstitute() {
   }
 }
 
-function shareToX() {
-  const text = `${CONFIG.shareText}\n\n${CONFIG.shareUrl}`;
-  const url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text);
-  window.open(url, "_blank", "noopener,noreferrer");
-}
-
 function resetExplorationState() {
   sessionStorage.removeItem("homuraTruthReached");
   window.location.href = "./index.html";
@@ -348,9 +336,6 @@ sampleVideo.addEventListener("click", handleVideoPanelClick);
 integrationTable.addEventListener("pointermove", scrubIntegrationList);
 integrationTable.addEventListener("touchmove", scrubIntegrationList);
 hiddenInstituteRow.addEventListener("click", activateInstitute);
-if (shareButton) {
-  shareButton.addEventListener("click", shareToX);
-}
 noiseOverlay.addEventListener("click", handleNoiseOverlayClick);
 resetStateButton.addEventListener("click", resetExplorationState);
 delayedGlitchButton.addEventListener("click", scheduleGlitchDemo);
