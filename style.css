@@ -403,6 +403,11 @@ h3 {
   object-fit: cover;
 }
 
+.sample-video.is-looping-anomaly .sample-video-player {
+  border-color: var(--warning);
+  box-shadow: 0 0 0 1px rgba(173, 47, 61, 0.55), 0 0 24px rgba(173, 47, 61, 0.28);
+}
+
 .video-scene {
   position: relative;
   min-height: 190px;
