@@ -1384,6 +1384,65 @@ h3 {
   line-height: 1.55;
 }
 
+.subject-list-card,
+.case-log {
+  grid-column: span 2;
+  min-height: 156px;
+}
+
+.subject-list-table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  background: rgba(8, 8, 8, 0.68);
+  color: #d6d6d6;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.58rem;
+}
+
+.subject-list-table th,
+.subject-list-table td {
+  padding: 5px 6px;
+  border: 1px solid rgba(160, 160, 160, 0.26);
+  text-align: left;
+  vertical-align: top;
+}
+
+.subject-list-table th {
+  color: #f0e5df;
+  background: rgba(173, 47, 61, 0.16);
+  font-weight: 700;
+}
+
+.case-log {
+  display: grid;
+  gap: 7px;
+  background:
+    linear-gradient(180deg, rgba(173, 47, 61, 0.08), transparent 48%),
+    rgba(10, 10, 10, 0.82);
+}
+
+.case-entry {
+  display: grid;
+  gap: 3px;
+  padding: 6px 8px;
+  border-left: 2px solid rgba(213, 91, 102, 0.56);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.case-entry span {
+  color: #f0e5df;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+}
+
+.case-entry p {
+  margin: 0;
+  font-size: 0.66rem;
+  line-height: 1.42;
+}
+
 .report-figure {
   position: relative;
   display: grid;
@@ -1521,6 +1580,11 @@ h3 {
   .report-columns,
   .report-bottom {
     grid-template-columns: 1fr;
+  }
+
+  .subject-list-card,
+  .case-log {
+    grid-column: auto;
   }
 
   .report-figure,

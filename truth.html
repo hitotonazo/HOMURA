@@ -26,7 +26,7 @@
           <div>
             <p class="report-kicker">CONFIDENTIAL OBSERVATIONAL REPORT / REV.04</p>
             <h1>HOMURA Behavioral Control Record</h1>
-            <p class="report-lede">本記録は、VA answer territories製HOMURA端末群を用いた居住者行動制御実験の観察報告である。被験者には通常のスマートホーム機能として提示し、音声、映像、AI提案、購買導線が日常判断へ与える影響を確認した。</p>
+            <p class="report-lede">本記録は、VA answer territories製HOMURA端末群を用いた居住者行動制御実験の観察報告である。被験者には通常のスマートホーム機能として提示し、音声、映像、照明、通知、購買導線が日常判断へ与える影響を測定した。</p>
           </div>
           <figure class="report-figure figure-main">
             <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_hero_truth_1200x500.png" alt="観測室の記録画像">
@@ -34,38 +34,68 @@
         </header>
 
         <section class="report-columns" aria-label="実験概要">
-          <div class="report-note">
-            <h2>1. 被験者概要</h2>
-            <p>被験者番号HM-0427。HOMURA導入前からスマート家電への抵抗は低く、通知や自動提案を便利な機能として受け入れる傾向が見られた。</p>
+          <div class="report-note subject-list-card">
+            <h2>1. 被験者リスト</h2>
+            <table class="subject-list-table" aria-label="被験者リスト">
+              <thead>
+                <tr>
+                  <th>被験者ID</th>
+                  <th>購入プラン</th>
+                  <th>世帯構成</th>
+                  <th>継続率</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>HM-0427</td><td>HOMURA Hub + Sleep Assist</td><td>4人家族</td><td>92%</td></tr>
+                <tr><td>HM-0192</td><td>Voice Optimization Set</td><td>単身世帯</td><td>81%</td></tr>
+                <tr><td>HM-0614</td><td>Child Support Bundle</td><td>夫婦＋子供1名</td><td>89%</td></tr>
+                <tr><td>HM-0088</td><td>Full Connected Plan</td><td>高齢夫婦</td><td>95%</td></tr>
+                <tr><td>HM-0731</td><td>Smart Routine Package</td><td>3人家族</td><td>87%</td></tr>
+              </tbody>
+            </table>
+            <p>対象世帯は「生活最適化サービス」の継続利用者より抽出。長期利用者ほど提案受容率および行動同期率の上昇が確認された。</p>
           </div>
           <figure class="report-figure">
             <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_speaker_alt_800x600.png" alt="音声刺激端末">
           </figure>
           <div class="report-note">
             <h2>2. 音声刺激</h2>
-            <p>快眠用音源の一覧に未分類の項目を混在させた。被験者は違和感を覚えた後も再生を試み、音源の正体確認を優先した。</p>
+            <p>快眠用音源の一覧に未分類の項目を混在させた。被験者は違和感を覚えた後も再生を試み、音源の正体確認を優先した。反復接触後、就寝前提案への応答率が上昇した。</p>
           </div>
           <figure class="report-figure">
             <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_tv_frame_glitch_800x600.png" alt="映像刺激フレーム">
           </figure>
           <div class="report-note">
             <h2>3. 映像刺激</h2>
-            <p>自然風景のサンプル映像に異常フレームを含めた。16秒から17秒付近で停止した被験者は、映像の異常を確認するため追加操作を行った。</p>
+            <p>異常フレーム視認後、被験者の一部に映像への再確認行動が発生。視線追跡ログでは画面中央注視時間の増加、睡眠前の映像再生回数増加、無音状態での映像起動傾向が確認された。複数名から「続きを確認したい」という反復報告が提出されている。</p>
           </div>
-          <figure class="report-figure">
-            <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_ai_hidden_800x600.png" alt="AI最適化ログ">
-          </figure>
-          <div class="report-note">
-            <h2>4. AI連携反応</h2>
-            <p>連携先一覧をこする操作により、通常表示されないVA連携を露出させた。被験者は離脱せず、隠された連携情報を確認し続けた。</p>
+          <div class="report-note case-log">
+            <h2>4. 行動誘導実例</h2>
+            <div class="case-entry">
+              <span>CASE 01 / LIGHT ADJUSTMENT</span>
+              <p>照明色温度を段階的に低下。被験者は23:40以降、自発的に就寝行動へ移行。</p>
+            </div>
+            <div class="case-entry">
+              <span>CASE 02 / PURCHASE ROUTING</span>
+              <p>夕方以降、高糖質食品の広告表示頻度を増加。対象被験者は3日以内に購買行動を実施。</p>
+            </div>
+            <div class="case-entry">
+              <span>CASE 03 / VISUAL FIXATION</span>
+              <p>自然風景映像をおすすめとして提示。異常フレーム挿入後、平均視聴時間が2.3倍へ増加。</p>
+            </div>
+            <div class="case-entry">
+              <span>CASE 04 / AUDIO PRIMING</span>
+              <p>深夜帯に微弱な環境音を自動再生。翌日の音声提案受容率が上昇。</p>
+            </div>
+            <div class="case-entry">
+              <span>CASE 05 / DEVICE RECHECK</span>
+              <p>スマートフォン操作停止時、通知・音声・照明変化を同期。平均17秒以内に端末再確認を誘発。</p>
+            </div>
           </div>
-          <figure class="report-figure">
-            <img src="https://pub-3d61cedd944c41198454cfdf476e04a9.r2.dev/images/img_ui_control_800x600.png" alt="制御UI">
-          </figure>
         </section>
 
         <section class="report-summary" aria-label="分析要約">
-          <p>結果として、HOMURAは「生活の最適化」という説明を維持したまま、被験者の睡眠導入、視線停止、探索行動、購買反応を段階的に誘導できることが確認された。被験者は介入を外部実験として認識していない。</p>
+          <p>結果として、HOMURAは「生活の最適化」という説明を維持したまま、睡眠導入、視線固定、探索行動、購買反応、端末再確認を段階的に誘導できることが確認された。被験者は介入を外部実験として認識していない。</p>
         </section>
 
         <section class="report-bottom" aria-label="記録資料">
