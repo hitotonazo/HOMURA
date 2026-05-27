@@ -129,12 +129,19 @@ function setAiAnomalyState() {
   aiImageButton.classList.add("is-active");
 }
 
+function setVideoAnomalyState() {
+  tvText.textContent = "29秒の自然風景サンプルです。停止位置によっては、未処理フレームが残る場合があります。";
+  videoPanel.classList.add("has-anomaly");
+  loadAnomalyAllVideo();
+}
+
 function restoreTruthTopState() {
   phase = 4;
   applyAlteredTop();
   setSpeakerAnomalyState();
   setAiAnomalyState();
   revealAiPartner();
+  startTruthAnomalyLoop();
   body.dataset.phase = "4";
 }
 
@@ -162,10 +169,25 @@ function loadAnomalyAllVideo() {
   anomalyAllLoaded = true;
 }
 
-function setVideoAnomalyState() {
-  tvText.textContent = "29秒の自然風景サンプルです。停止位置によっては、未処理フレームが残る場合があります。";
-  videoPanel.classList.add("has-anomaly");
-  loadAnomalyAllVideo();
+function startTruthAnomalyLoop() {
+  anomalyLoopActive = true;
+  anomalyArmedAt = ANOMALY_START;
+  videoPanel.classList.add("has-anomaly", "is-looping-anomaly");
+  tvText.textContent = "異常フレームが固定されています。再生と停止のみ操作できます。";
+  switchingVideoSource = true;
+  sampleVideo.loop = true;
+  sampleVideo.controls = false;
+  sampleVideo.src = videoUrl("anomaly.mp4");
+  sampleVideo.load();
+  sampleVideo.addEventListener("loadedmetadata", () => {
+    switchingVideoSource = false;
+    sampleVideo.currentTime = 0;
+    sampleVideo.play().catch(() => updateVideoDisplay());
+    updateVideoDisplay();
+  }, { once: true });
+  window.setTimeout(() => {
+    switchingVideoSource = false;
+  }, 1200);
 }
 
 function revealProtocol() {
@@ -196,6 +218,13 @@ function playPlaylistAudio(event) {
   if (currentAudio) {
     currentAudio.pause();
     currentAudio.currentTime = 0;
+    currentAudio = null;
+  }
+
+  if (item !== protocolItem) {
+    document.querySelectorAll(".playlist-item").forEach((button) => button.classList.remove("is-playing"));
+    speakerText.textContent = "現在再生できません。";
+    return;
   }
 
   currentAudio = new Audio(item.dataset.audio);
@@ -256,6 +285,15 @@ function activateInstitute() {
 
 function toggleVideo() {
   if (anomalyLoopActive) {
+    if (phase === 4) {
+      if (sampleVideo.paused) {
+        sampleVideo.play();
+      } else {
+        sampleVideo.pause();
+      }
+      updateVideoDisplay();
+      return;
+    }
     handleVideoPanelClick();
     return;
   }
@@ -274,7 +312,7 @@ function updateVideoDisplay() {
   const total = Math.floor(duration).toString().padStart(2, "0");
   videoTime.textContent = `00:${seconds} / 00:${total}`;
   videoProgress.style.width = `${Math.min(100, (current / duration) * 100)}%`;
-  videoToggle.textContent = anomalyLoopActive ? "確認" : sampleVideo.paused ? "再生" : "停止";
+  videoToggle.textContent = sampleVideo.paused ? "再生" : "停止";
   videoPanel.classList.toggle("is-playing", !sampleVideo.paused);
   videoPanel.classList.toggle("is-looping-anomaly", anomalyLoopActive);
 }
