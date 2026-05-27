@@ -130,7 +130,7 @@ function setAiAnomalyState() {
 }
 
 function setVideoAnomalyState() {
-  tvText.textContent = "29秒の自然風景サンプルです。停止位置によっては、未処理フレームが残る場合があります。";
+  tvText.textContent = "家族の時間帯に合わせて、画面の明るさとおすすめ映像を自動で整えます。";
   videoPanel.classList.add("has-anomaly");
   loadAnomalyAllVideo();
 }
