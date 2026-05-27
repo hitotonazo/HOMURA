@@ -22,6 +22,8 @@ const videoTrack = document.getElementById("videoTrack");
 const videoTime = document.getElementById("videoTime");
 const videoProgress = document.getElementById("videoProgress");
 const aiImage = document.getElementById("aiImage");
+const aiImageButton = document.getElementById("aiImageButton");
+const aiWaitMessage = document.getElementById("aiWaitMessage");
 const assistantText = document.getElementById("assistantText");
 const integrationTable = document.getElementById("integrationTable");
 const hiddenInstituteRow = document.getElementById("hiddenInstituteRow");
@@ -33,12 +35,13 @@ const topShareButton = document.getElementById("topShareButton");
 
 let noiseNextAction = null;
 let protocolRevealed = false;
-let scrubCount = 0;
 let currentAudio = null;
 let anomalyLoopActive = false;
 let anomalyArmedAt = null;
 let anomalyAllLoaded = false;
 let switchingVideoSource = false;
+let aiWaitStarted = false;
+let aiPartnerRevealed = false;
 
 function assetUrl(fileName) {
   return `${ASSET_BASE_URL}/${fileName}`;
@@ -92,15 +95,11 @@ function applyPhase() {
   }
 
   if (phase >= 2) {
-    tvText.textContent = "29秒の自然風景サンプルです。停止位置によっては、未処理フレームが残る場合があります。";
-    videoPanel.classList.add("has-anomaly");
-    loadAnomalyAllVideo();
+    setAiAnomalyState();
   }
 
   if (phase >= 3) {
-    aiImage.src = assetUrl("img_ai_hidden_800x600.png");
-    assistantText.textContent = "HOMURA AIは、睡眠環境、連携先、刺激反応を統合して最適化します。";
-    integrationTable.classList.add("is-sensitive");
+    setVideoAnomalyState();
   }
 
   if (phase === 4) {
@@ -123,10 +122,19 @@ function setSpeakerAnomalyState() {
   protocolItem.classList.add("is-revealing");
 }
 
+function setAiAnomalyState() {
+  aiImage.src = "./images/img_ai_ui_anomaly_800x600.png.png";
+  assistantText.textContent = "HOMURA AIは、睡眠環境、連携先、刺激反応を統合して最適化します。";
+  integrationTable.classList.add("is-sensitive");
+  aiImageButton.classList.add("is-active");
+}
+
 function restoreTruthTopState() {
   phase = 4;
   applyAlteredTop();
   setSpeakerAnomalyState();
+  setAiAnomalyState();
+  revealAiPartner();
   body.dataset.phase = "4";
 }
 
@@ -152,6 +160,12 @@ function loadAnomalyAllVideo() {
     switchingVideoSource = false;
   }, 1200);
   anomalyAllLoaded = true;
+}
+
+function setVideoAnomalyState() {
+  tvText.textContent = "29秒の自然風景サンプルです。停止位置によっては、未処理フレームが残る場合があります。";
+  videoPanel.classList.add("has-anomaly");
+  loadAnomalyAllVideo();
 }
 
 function revealProtocol() {
@@ -211,6 +225,35 @@ function activateProtocol(event) {
   }
 }
 
+function beginAiWait() {
+  if (phase !== 2 || aiWaitStarted || aiPartnerRevealed) return;
+
+  aiWaitStarted = true;
+  aiImageButton.classList.add("is-waiting");
+  aiWaitMessage.setAttribute("aria-hidden", "false");
+  window.setTimeout(() => {
+    if (phase === 2) {
+      revealAiPartner();
+    }
+  }, 5000);
+}
+
+function revealAiPartner() {
+  aiPartnerRevealed = true;
+  aiWaitStarted = false;
+  aiImageButton.classList.remove("is-waiting");
+  aiWaitMessage.setAttribute("aria-hidden", "true");
+  hiddenInstituteRow.hidden = false;
+  hiddenInstituteRow.classList.add("is-visible");
+  hiddenLog.classList.add("is-visible");
+}
+
+function activateInstitute() {
+  if (phase === 2 && aiPartnerRevealed) {
+    showAlteration(3);
+  }
+}
+
 function toggleVideo() {
   if (anomalyLoopActive) {
     handleVideoPanelClick();
@@ -237,8 +280,8 @@ function updateVideoDisplay() {
 }
 
 function handleVideoPanelClick() {
-  if (phase === 2 && anomalyLoopActive) {
-    showAlteration(3);
+  if (phase === 3 && anomalyLoopActive) {
+    showAlteration(4);
   }
 }
 
@@ -252,7 +295,7 @@ function seekVideo(event) {
 }
 
 function handleVideoPause() {
-  if (phase !== 2 || anomalyLoopActive || switchingVideoSource) return;
+  if (phase !== 3 || anomalyLoopActive || switchingVideoSource) return;
 
   const stoppedInAnomalyWindow = sampleVideo.currentTime >= ANOMALY_START && sampleVideo.currentTime <= ANOMALY_END;
   if (stoppedInAnomalyWindow) {
@@ -287,25 +330,6 @@ function startAnomalyLoop() {
   }
 }
 
-function scrubIntegrationList() {
-  if (phase < 3 || !hiddenInstituteRow.hidden) return;
-
-  scrubCount += 1;
-  integrationTable.style.setProperty("--scrub", Math.min(scrubCount / 18, 1));
-
-  if (scrubCount >= 18) {
-    hiddenInstituteRow.hidden = false;
-    hiddenInstituteRow.classList.add("is-visible");
-    hiddenLog.classList.add("is-visible");
-  }
-}
-
-function activateInstitute() {
-  if (phase === 3 && !hiddenInstituteRow.hidden) {
-    showAlteration(4);
-  }
-}
-
 function shareToX() {
   const text = `${CONFIG.shareText}\n\n${CONFIG.shareUrl}`;
   const url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text);
@@ -324,6 +348,7 @@ function showPurchaseMessage() {
 protocolBlank.addEventListener("click", revealProtocol);
 protocolItem.addEventListener("click", activateProtocol);
 audioStop.addEventListener("click", stopCurrentAudio);
+aiImageButton.addEventListener("click", beginAiWait);
 videoToggle.addEventListener("click", (event) => {
   event.stopPropagation();
   toggleVideo();
@@ -343,8 +368,6 @@ sampleVideo.addEventListener("pause", () => {
   handleVideoPause();
 });
 sampleVideo.addEventListener("click", handleVideoPanelClick);
-integrationTable.addEventListener("pointermove", scrubIntegrationList);
-integrationTable.addEventListener("touchmove", scrubIntegrationList);
 hiddenInstituteRow.addEventListener("click", activateInstitute);
 noiseOverlay.addEventListener("click", handleNoiseOverlayClick);
 resetStateButton.addEventListener("click", resetExplorationState);

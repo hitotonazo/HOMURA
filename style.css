@@ -533,10 +533,51 @@ h3 {
   position: relative;
 }
 
-.ai-panel img {
+.ai-image-button {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ai-panel img,
+.ai-image-button img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+}
+
+.ai-wait-message {
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  display: none;
+  width: min(58%, 330px);
+  transform: translate(-50%, -50%) rotate(-1deg);
+  color: #ff1726;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: clamp(1.15rem, 4.8vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(255, 0, 28, 0.75), 0 0 18px rgba(255, 0, 28, 0.45);
+  pointer-events: none;
+}
+
+.ai-image-button.is-waiting .ai-wait-message {
+  display: block;
+  animation: aiWaitPulse 0.58s steps(2, end) infinite;
+}
+
+@keyframes aiWaitPulse {
+  50% {
+    opacity: 0.42;
+    transform: translate(-50%, -50%) rotate(1deg);
+  }
 }
 
 .chat-ui {
@@ -1704,8 +1745,15 @@ h3 {
     gap: 12px;
   }
 
+  .ai-image-button,
   .ai-panel img {
     position: static;
+  }
+
+  .ai-wait-message {
+    top: 43%;
+    width: 62%;
+    font-size: clamp(1rem, 6.2vw, 1.45rem);
   }
 
   .hidden-log {
