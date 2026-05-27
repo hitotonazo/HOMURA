@@ -86,7 +86,7 @@
               <button class="playlist-item" type="button" data-audio="./audio/rain_tone.wav">雨音</button>
               <button class="playlist-item" type="button" data-audio="./audio/white_noise.wav">深夜のホワイトノイズ</button>
               <button id="protocolBlank" class="playlist-item blank-item" type="button" aria-label="空白のプレイリスト項目"></button>
-              <button id="protocolItem" class="playlist-item protocol-item" type="button" data-audio="./audio/lose_yourself_protocol.wav" hidden>Lose Yourself Protocol</button>
+              <button id="protocolItem" class="playlist-item protocol-item" type="button" data-audio="./audio/lose_yourself_protocol.m4a" hidden>Lose Yourself Protocol</button>
             </div>
             <button id="audioStop" class="text-button audio-stop" type="button">音源を停止</button>
           </div>
@@ -184,6 +184,16 @@
         <div class="purchase-box">
           <button id="purchaseButton" class="button primary" type="button">HOMURAを購入する</button>
           <p id="purchaseMessage" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section id="truthReturn" class="truth-return-panel" aria-label="実験レポートへの導線">
+        <p class="eyebrow">Observation Record</p>
+        <h2>HOMURA Behavioral Control Record</h2>
+        <p>一度確認された実験レポートを再表示できます。共有時は外部サービス（X）へ移動します。</p>
+        <div class="truth-return-actions">
+          <a class="button secondary" href="./truth.html">実験レポートへ戻る</a>
+          <button id="topShareButton" class="share-button" type="button">このページについて投稿する</button>
         </div>
       </section>
     </main>

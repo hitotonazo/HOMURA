@@ -29,6 +29,7 @@ const hiddenLog = document.getElementById("hiddenLog");
 const resetStateButton = document.getElementById("resetStateButton");
 const purchaseButton = document.getElementById("purchaseButton");
 const purchaseMessage = document.getElementById("purchaseMessage");
+const topShareButton = document.getElementById("topShareButton");
 
 let noiseNextAction = null;
 let protocolRevealed = false;
@@ -87,8 +88,7 @@ function applyPhase() {
   body.classList.toggle("truth-mode", phase === 4);
 
   if (phase >= 1) {
-    speakerImage.src = assetUrl("img_speaker_alt_800x600.png");
-    speakerText.textContent = "睡眠音源の一部に、分類されていない項目が混在しています。実際に音楽が鳴ります。ご注意ください。";
+    setSpeakerAnomalyState();
   }
 
   if (phase >= 2) {
@@ -112,6 +112,22 @@ function applyPhase() {
 
 function applyAlteredTop() {
   body.classList.add("truth-mode");
+}
+
+function setSpeakerAnomalyState() {
+  speakerImage.src = assetUrl("img_speaker_alt_800x600.png");
+  speakerText.textContent = "睡眠音源の一部に、分類されていない項目が混在しています。実際に音楽が鳴ります。ご注意ください。";
+  protocolRevealed = true;
+  protocolBlank.hidden = true;
+  protocolItem.hidden = false;
+  protocolItem.classList.add("is-revealing");
+}
+
+function restoreTruthTopState() {
+  phase = 4;
+  applyAlteredTop();
+  setSpeakerAnomalyState();
+  body.dataset.phase = "4";
 }
 
 function loadAnomalyAllVideo() {
@@ -290,6 +306,12 @@ function activateInstitute() {
   }
 }
 
+function shareToX() {
+  const text = `${CONFIG.shareText}\n\n${CONFIG.shareUrl}`;
+  const url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text);
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
 function resetExplorationState() {
   sessionStorage.removeItem("homuraTruthReached");
   window.location.href = "./index.html";
@@ -327,15 +349,17 @@ hiddenInstituteRow.addEventListener("click", activateInstitute);
 noiseOverlay.addEventListener("click", handleNoiseOverlayClick);
 resetStateButton.addEventListener("click", resetExplorationState);
 purchaseButton.addEventListener("click", showPurchaseMessage);
+if (topShareButton) {
+  topShareButton.addEventListener("click", shareToX);
+}
 
 videoPanel.classList.add("is-enabled");
 videoToggle.disabled = false;
 protocolBlank.hidden = false;
 playlistList.addEventListener("click", playPlaylistAudio);
+
 if (sessionStorage.getItem("homuraTruthReached") === "1") {
-  phase = 4;
-  body.classList.add("truth-mode");
-  applyAlteredTop();
+  restoreTruthTopState();
 } else {
   applyPhase();
 }
