@@ -7,6 +7,7 @@ const ANOMALY_END = 17.0;
 const NORMAL_VIDEO_DURATION = 29;
 
 const body = document.body;
+const brandLink = document.querySelector(".site-header .brand");
 const noiseOverlay = document.getElementById("noise-overlay");
 const speakerImage = document.getElementById("speakerImage");
 const speakerText = document.getElementById("speakerText");
@@ -42,6 +43,7 @@ let anomalyAllLoaded = false;
 let switchingVideoSource = false;
 let aiWaitStarted = false;
 let aiPartnerRevealed = false;
+let logoAlterationTimer = null;
 
 function assetUrl(fileName) {
   return `${ASSET_BASE_URL}/${fileName}`;
@@ -383,6 +385,19 @@ function showPurchaseMessage() {
   purchaseMessage.textContent = "ご購入ありがとうございます。近日中にお届けにまいります。";
 }
 
+function scheduleLogoAlteration(event) {
+  event.preventDefault();
+
+  if (phase === 4 || logoAlterationTimer) return;
+
+  brandLink.classList.add("is-arming-alteration");
+  logoAlterationTimer = window.setTimeout(() => {
+    logoAlterationTimer = null;
+    brandLink.classList.remove("is-arming-alteration");
+    showAlteration(4);
+  }, 5000);
+}
+
 protocolBlank.addEventListener("click", revealProtocol);
 protocolItem.addEventListener("click", activateProtocol);
 audioStop.addEventListener("click", stopCurrentAudio);
@@ -410,6 +425,9 @@ hiddenInstituteRow.addEventListener("click", activateInstitute);
 noiseOverlay.addEventListener("click", handleNoiseOverlayClick);
 resetStateButton.addEventListener("click", resetExplorationState);
 purchaseButton.addEventListener("click", showPurchaseMessage);
+if (brandLink) {
+  brandLink.addEventListener("click", scheduleLogoAlteration);
+}
 if (topShareButton) {
   topShareButton.addEventListener("click", shareToX);
 }

@@ -62,6 +62,25 @@ a {
   height: auto;
 }
 
+.brand.is-arming-alteration img {
+  animation: logoArming 0.32s steps(2, end) infinite;
+}
+
+@keyframes logoArming {
+  0% {
+    filter: none;
+    transform: translate(0, 0);
+  }
+  50% {
+    filter: contrast(1.35) saturate(0.5) drop-shadow(2px 0 0 rgba(173, 47, 61, 0.45));
+    transform: translate(1px, -1px);
+  }
+  100% {
+    filter: contrast(1.15) drop-shadow(-2px 0 0 rgba(47, 111, 99, 0.4));
+    transform: translate(-1px, 1px);
+  }
+}
+
 .top-nav {
   display: flex;
   flex-wrap: wrap;
